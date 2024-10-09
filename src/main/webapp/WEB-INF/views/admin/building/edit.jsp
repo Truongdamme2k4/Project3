@@ -107,123 +107,115 @@
                 </div>
             </div>
             <div class="row" style="font-family: 'Times New Roman', Times, serif;">
-                <form:form modelAttribute="buildingEdit" id="listForm" method="get">
+                <form:form modelAttribute="buildingEdit" id="listForm" method="GET">
                     <div class="col-xs-12">
-                    <form class="form-horizontal" role="form" id="form-edit">
-                        <div class="form-group">
-                            <label class="col-xs-3">Tên tòa nhà</label>
-                            <div class="col-xs-9">
-                                <form:input class="form-control" path="name"></form:input>
+                        <form class="form-horizontal" role="form" >
+                            <div class="form-group">
+                                <label class="col-xs-3">Tên tòa nhà</label>
+                                <div class="col-xs-9">
+                                    <form:input class="form-control" path="name"/>
+                                </div>
                             </div>
-                        </div>
 
-                        <div class="form-group">
-                            <label class="col-xs-3">Quận</label>
-                            <div class="col-xs-2">
-                                <select class="form-control" id="districtId" name="districtId">
-                                    <option value="">---Chọn quận---</option>
-                                    <option value="1">Quận 1</option>
-                                    <option value="2">Quận 2</option>
-                                    <option value="3">Quận 3</option>
-                                    <option value="4">Quận 4</option>
-                                </select>
-                            </div>
-                        </div>
-                        <div class="form-group">
-                            <label class="col-xs-3">Phường</label>
-                            <div class="col-xs-9">
-                                <input class="form-control" type="text" id="ward" name="ward">
-                            </div>
-                        </div>
-                        <div class="form-group">
-                            <label class="col-xs-3">Đường</label>
-                            <div class="col-xs-9">
-                                <input class="form-control" type="text" id="street" name="street">
-                            </div>
-                        </div>
-                        <div class="form-group">
-                            <label class="col-xs-3">Kết cấu</label>
-                            <div class="col-xs-9">
-                                <input class="form-control" type="text" id="ketcau" name="ketcau">
-                            </div>
-                        </div>
-                        <div class="form-group">
-                            <label class="col-xs-3">Số tầng hầm</label>
-                            <div class="col-xs-9">
-                                <input class="form-control" type="number" id="numberOfBasement" name="numberOfBasement">
-                            </div>
-                        </div>
-                        <div class="form-group">
-                            <label class="col-xs-3">Diện tích sàn</label>
-                            <div class="col-xs-9">
-                                <input class="form-control" type="number" id="floorArea" name="floorArea">
-                            </div>
-                        </div>
-                        <div class="form-group">
-                            <label class="col-xs-3">Hướng</label>
-                            <div class="col-xs-9">
-                                <input class="form-control" type="text" id="direction" name="direction">
-                            </div>
-                        </div>
-                        <div class="form-group">
-                            <label class="col-xs-3">Hạng</label>
-                            <div class="col-xs-9">
-                                <input class="form-control" type="text" id="level" name="level">
-                            </div>
-                        </div>
-                        <div class="form-group">
-                            <label class="col-xs-3">Diện tích thuê</label>
-                            <div class="col-xs-9">
-                                <input class="form-control" type="text" id="rentArea" name="rentArea">
-                            </div>
-                        </div>
-                        <div class="form-group">
-                            <label class="col-xs-3">Giá thuê</label>
-                            <div class="col-xs-9">
-                                <input class="form-control" type="text" id="rentPrice" name="rentPrice">
-                            </div>
-                        </div>
-                        <div class="form-group">
-                            <label class="col-xs-3">Mô tả giá</label>
-                            <div class="col-xs-9">
-                                <input class="form-control" type="text" id="motagia" name="motatgia">
-                            </div>
-                        </div>
+                            <div class="form-group">
+                                <label class="col-xs-3">Quận</label>
+                                <div class="col-xs-2">
 
-                        <div class="form-group">
-                            <label class="col-xs-3">Loại tòa nhà</label>
-                            <div class="col-xs-9">
-                                <label class="checkbox-inline">
-                                    <input type="checkbox" name="typeCode" value="noi-that">Nội thất
-                                </label>
-                                <label class="checkbox-inline">
-                                    <input type="checkbox" name="typeCode" value="nguyen-can">Nguyên căn
-                                </label>
-                                <label class="checkbox-inline">
-                                    <input type="checkbox" name="typeCode" value="tang-triet">Tầng triệt
-                                </label>
+                                    <form:select class="form-control" path="district">
+                                        <form:option value="">---Chọn quận---</form:option>
+                                        <form:options items="${districts}"/>
+
+                                    </form:select>
+                                </div>
                             </div>
-                        </div>
-                        <div class="form-group">
-                            <label class="col-xs-3"></label>
-                            <div class="col-xs-9">
+                            <div class="form-group">
+                                <label class="col-xs-3">Phường</label>
+                                <div class="col-xs-9">
+                                    <input class="form-control" type="text" id="ward" name="ward" value="">
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label class="col-xs-3">Đường</label>
+                                <div class="col-xs-9">
+                                    <input class="form-control" type="text" id="street" name="street" value="">
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label class="col-xs-3">Kết cấu</label>
+                                <div class="col-xs-9">
+                                    <input class="form-control" type="text" id="structure" name="structure" value="">
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label class="col-xs-3">Số tầng hầm</label>
+                                <div class="col-xs-9">
+                                    <input class="form-control" type="number" id="numberofbasement" name="numberofbasement" value="">
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label class="col-xs-3">Diện tích sàn</label>
+                                <div class="col-xs-9">
+                                    <input class="form-control" type="number" id="floorarea" name="floorarea" value="">
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label class="col-xs-3">Hướng</label>
+                                <div class="col-xs-9">
+                                    <input class="form-control" type="text" id="direction" name="direction" value="">
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label class="col-xs-3">Hạng</label>
+                                <div class="col-xs-9">
+                                    <input class="form-control" type="text" id="level" name="level" value="">
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label class="col-xs-3">Diện tích thuê</label>
+                                <div class="col-xs-9">
+                                    <input class="form-control" type="text" id="rentarea" name="rentarea" value="">
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label class="col-xs-3">Giá thuê</label>
+                                <div class="col-xs-9">
+                                    <input class="form-control" type="text" id="rentarice" name="rentarice" value="">
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label class="col-xs-3">Mô tả giá</label>
+                                <div class="col-xs-9">
+                                    <input class="form-control" type="text" id="motagia" name="motatgia" value="">
+                                </div>
+                            </div>
+
+                            <div class="form-group">
+                                <label class="col-xs-3">Loại tòa nhà</label>
+                                <div class="col-xs-9">
+                                    <form:checkboxes items="${typeCodes}" path="typeCode"/>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label class="col-xs-3"></label>
+                                <div class="col-xs-9">
                                     <c:if test="${not empty buildingEdit.id}">
-                                        <button type="button" class="btn btn-primary" id="btnAddBuilding">
+                                        <button type="button" class="btn btn-primary" id="btnAddOrBuilding">
                                             Cập nhật tòa nhà
                                         </button>
                                         <button type="button" class="btn btn-primary">Hủy thao tác</button>
                                     </c:if>
                                     <c:if test="${empty buildingEdit.id}">
-                                        <button type="button" class="btn btn-primary" id="btnAddBuilding">
+                                        <button type="button" class="btn btn-primary" id="btnAddOrBuilding">
                                             Thêm tòa nhà
                                         </button>
                                         <button type="button" class="btn btn-primary">Hủy thao tác</button>
                                     </c:if>
 
                                 </div>
-                        </div>
-                    </form>
-                </div>
+                            </div>
+                            <form:hidden path="id"/>
+                        </form>
+                    </div>
                 </form:form>
 
             </div>
@@ -232,5 +224,38 @@
         </div><!-- /.page-content -->
     </div>
 </div><!-- /.main-content -->
+<script>
+    $('#btnAddOrBuilding').click(function () {
+        var data = {}
+        var typeCode = [];
+        var formData = $('#listForm').serializeArray();
+        $.each(formData, function (i, v) {
+            if (v.name != 'typeCode') {
+                data["" + v.name + ""] = v.value;
+            } else {
+                typeCode.push(v.value);
+            }
+        });
+        data['typeCode'] = typeCode;
+
+        //call api
+        $.ajax({
+            type: "POST",
+            url: "/api/building",
+            data: JSON.stringify(data),
+            contentType: "application/json",
+            dataType: "JSON",
+            succsess: function (respond) {
+                console.log("Success");
+            },
+            error: function (respond) {
+                console.log("failed");
+                console.log(respond);
+            }
+        })
+    });
+
+
+</script>
 </body>
 </html>

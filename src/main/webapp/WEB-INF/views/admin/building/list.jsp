@@ -151,10 +151,9 @@
                                             <div class="col-xs-2">
                                                 <label class="name">Quận</label>
                                                 <form:select class="form-control" path="district">
-                                                    <form:option value="Quận 1">---Chọn quận---</form:option>
-                                                    <form:option value="QUận 2">Hà Đông</form:option>
-                                                    <form:option value="Quận 3">Cầu Giấy</form:option>
-                                                    <form:option value="Quận 10">Đống Đa</form:option>
+                                                    <form:option value="">---Chọn quận---</form:option>
+                                                    <form:options items="${districts}"/>
+
                                                 </form:select>
                                             </div>
                                             <div class="col-xs-5">
@@ -219,8 +218,8 @@
                                                 <label class="name">Nhân viên</label>
                                                 <form:select class="form-control" path="staffId">
                                                     <form:option value="">---Chọn nhân viên phụ trách---</form:option>
-                                                    <form:option value="2">Văn</form:option>
-                                                    <form:option value="3">Thọ</form:option>
+                                                    <form:options items="${listStaffs}"/>
+
 
 
                                                 </form:select>
@@ -230,15 +229,7 @@
                                     <div class="form-group">
                                         <div class="col-xs-12">
                                             <div class="col-xs-6">
-                                                <label class="checkbox-inline">
-                                                    <input type="checkbox" name="typeCode" value="noi-that">Nội thất
-                                                </label>
-                                                <label class="checkbox-inline">
-                                                    <input type="checkbox" name="typeCode" value="nguyen-can">Nguyên căn
-                                                </label>
-                                                <label class="checkbox-inline">
-                                                    <input type="checkbox" name="typeCode" value="tang-triet">Tầng triệt
-                                                </label>
+                                                <form:checkboxes items="${typeCodes}" path="typeCode"/>
                                             </div>
                                         </div>
                                     </div>
