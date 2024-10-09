@@ -41,7 +41,7 @@ public class BuildingController {
         item1.setServiceFee("234");
         responseList.add(item1);
         BuildingSearchResponse item2= new BuildingSearchResponse();
-        item2.setId(3L);
+        item2.setId(4L);
         item2.setName("HAHA building");
         item2.setAddress("91 Dai oan");
         item2.setNumberOfBasement(2L);
@@ -72,7 +72,8 @@ public class BuildingController {
         buildingDTO.setId(Id);
         buildingDTO.setName("ok");
         mav.addObject("buildingEdit",buildingDTO);
-
+        mav.addObject("districts", District.type());
+        mav.addObject("typeCodes", TypeCode.type());
         return mav;
     }
 }

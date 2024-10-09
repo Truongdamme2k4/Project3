@@ -109,7 +109,7 @@
             <div class="row" style="font-family: 'Times New Roman', Times, serif;">
                 <form:form modelAttribute="buildingEdit" id="listForm" method="GET">
                     <div class="col-xs-12">
-                        <form class="form-horizontal" role="form" >
+                        <form class="form-horizontal" role="form">
                             <div class="form-group">
                                 <label class="col-xs-3">Tên tòa nhà</label>
                                 <div class="col-xs-9">
@@ -149,7 +149,8 @@
                             <div class="form-group">
                                 <label class="col-xs-3">Số tầng hầm</label>
                                 <div class="col-xs-9">
-                                    <input class="form-control" type="number" id="numberofbasement" name="numberofbasement" value="">
+                                    <input class="form-control" type="number" id="numberofbasement"
+                                           name="numberofbasement" value="">
                                 </div>
                             </div>
                             <div class="form-group">
@@ -202,18 +203,20 @@
                                         <button type="button" class="btn btn-primary" id="btnAddOrBuilding">
                                             Cập nhật tòa nhà
                                         </button>
-                                        <button type="button" class="btn btn-primary">Hủy thao tác</button>
+                                        <button type="button" class="btn btn-primary" id="btnCancel">Hủy thao tác
+                                        </button>
                                     </c:if>
                                     <c:if test="${empty buildingEdit.id}">
                                         <button type="button" class="btn btn-primary" id="btnAddOrBuilding">
                                             Thêm tòa nhà
                                         </button>
-                                        <button type="button" class="btn btn-primary">Hủy thao tác</button>
+                                        <button type="button" class="btn btn-primary" id="btnCancel">Hủy thao tác
+                                        </button>
                                     </c:if>
 
                                 </div>
                             </div>
-                            <form:hidden path="id"/>
+                            <form:hidden path="id" id="buildingId"/>
                         </form>
                     </div>
                 </form:form>
@@ -237,8 +240,15 @@
             }
         });
         data['typeCode'] = typeCode;
+        if(typeCode!=""){
+            addOrUpdateBuilding(data);
+        } else{
+            window.location.href="<c:url value="/admin/building-edit?typeCode=require"/>";
+        }
+    });
 
-        //call api
+    //call api
+    function addOrUpdateBuilding(data) {
         $.ajax({
             type: "POST",
             url: "/api/building",
@@ -252,7 +262,12 @@
                 console.log("failed");
                 console.log(respond);
             }
-        })
+
+        });
+    }
+
+    $('#btnCancel').click(function () {
+        window.location.href = "/admin/building-list";
     });
 
 
