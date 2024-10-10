@@ -221,7 +221,6 @@
                                                     <form:options items="${listStaffs}"/>
 
 
-
                                                 </form:select>
                                             </div>
                                         </div>
@@ -331,13 +330,15 @@
                                         <i class="ace-icon fa fa-check bigger-120"></i>
                                     </button>
 
-                                    <a href="/admin/building-edit-${item.id}" class="btn btn-xs btn-info" title="Sửa tòa nhà">
+                                    <a href="/admin/building-edit-${item.id}" class="btn btn-xs btn-info"
+                                       title="Sửa tòa nhà">
 
                                         <i class="ace-icon fa fa-pencil bigger-120"></i>
 
                                     </a>
 
-                                    <button class="btn btn-xs btn-danger" title="Xóa tòa nhà" onclick="deleteBuilding(${item.id})">
+                                    <button class="btn btn-xs btn-danger" title="Xóa tòa nhà"
+                                            onclick="deleteBuilding(${item.id})">
                                         <svg xmlns="http://www.w3.org/2000/svg" width="13" height="13"
                                              fill="currentColor" class="bi bi-building-add" viewBox="0 0 16 16">
                                             <path d="M12.5 16a3.5 3.5 0 1 0 0-7 3.5 3.5 0 0 0 0 7m.5-5v1h1a.5.5 0 0 1 0 1h-1v1a.5.5 0 0 1-1 0v-1h-1a.5.5 0 0 1 0-1h1v-1a.5.5 0 0 1 1 0"></path>
@@ -389,21 +390,10 @@
                     </thead>
 
                     <tbody>
-                    <tr>
-                        <td class="center">
-                            <input type="checkbox" id="checkbox_1" value="1" checked>
-                        </td>
-                        <td>Nguyễn Văn A</td>
-                    </tr>
-                    <tr>
-                        <td class="center">
-                            <input type="checkbox" id="checkbox_2" value="3">
-                        </td>
-                        <td>Nguyễn Văn A</td>
-                    </tr>
+
                     </tbody>
                 </table>
-                <input type="hidden" id="buildingId" name="buildingId" value="1">
+                <input type="hidden" id="buildingId" name="buildingId" value="">
             </div>
 
             <!-- Modal footer -->
@@ -419,9 +409,40 @@
 <script>
     function assignmentBuilding(buildingId) {
         $('#assignmentBuildingModal').modal();
+        loadStaff(buildingId);
+        $('#buildingId').val(buildingId);
+
     }
 
-    $('#btnassignmentBuilding').click(function (e) {
+    function loadStaff(buildingId) {
+        $.ajax({
+            url: "/api/building/" + buildingId + '/staffs',
+            type: "GET",
+            // data: JSON.stringify(data),
+            // contentType: "application/json",
+            dataType: 'json',
+            success: function (response) {
+                var row = '';
+                $.each(response.data, function (index, item) {
+                    row += '<tr>';
+                    row += '<td class="text-center"><input type="checkbox" value=' + item.staffId + ' id="checkbox_' + item.staffId + ' class="check-box-element" ' + item.checked + '/></td>';
+                    row += '<td class="text-center">' + item.fullName + '</td>';
+                    row += '</tr>';
+                });
+                $('#staffList tbody').html(row);
+                console.info("susscess");
+
+
+            },
+            error: function (response) {
+                console.log("failed");
+                window.location.href = "<c:url value="/admin/building-list?message=error"/>";
+                console.log(response);
+            }
+        });
+    }
+
+    $('#btnassignmentBuilding').click(function(e) {
         e.preventDefault();
         var data = {};
         data['buildingId'] = $('#buildingId').val();
@@ -429,30 +450,55 @@
             return $(this).val();
         }).get();
         data['staffs'] = staffs;
+        if(data['staffs']!=""){
+             assignment(data);
+        }
         console.log("OK");
     })
+
+    function assignment(data){
+        $.ajax({
+            url: "/api/building/assignment",
+            type: "POST",
+            data: JSON.stringify(data),
+            contentType: "application/json",
+            dataType: 'json',
+            success: function (response) {
+
+                $('#staffList tbody').html(row);
+                console.info("susscess");
+
+            },
+            error: function (response) {
+                console.info("Giao không thành công");
+                window.location.href = "<c:url value="/admin/building-list?message=error"/>";
+                console.log(response);
+            }
+        });
+    }
 
     $('#btnSearchBuilding').click(function (e) {
         e.preventDefault();
         $('#ListForm').submit();
     });
 
-    function deleteBuilding(data){
-        var buildingId =[data];
+    function deleteBuilding(data) {
+        var buildingId = [data];
         deleteBuildings(buildingId);
     }
-     $('#btnDeleteBuilding').click(function(e){
-          e.preventDefault();
-          var buildingIds=$('#tableList').find('tbody input[type=checkbox]:checked').map(function(){
-              return $(this).val();
-          }).get();
-           deleteBuildings(buildingIds);
-     });
 
-    function deleteBuildings(data){
+    $('#btnDeleteBuilding').click(function (e) {
+        e.preventDefault();
+        var buildingIds = $('#tableList').find('tbody input[type=checkbox]:checked').map(function () {
+            return $(this).val();
+        }).get();
+        deleteBuildings(buildingIds);
+    });
+
+    function deleteBuildings(data) {
         $.ajax({
             type: "DELETE",
-            url: "/api/building/"+data,
+            url: "/api/building/" + data,
             data: JSON.stringify(data),
             contentType: "application/json",
             dataType: "JSON",

@@ -240,10 +240,10 @@
             }
         });
         data['typeCode'] = typeCode;
-        if(typeCode!=""){
+        if (typeCode != "") {
             addOrUpdateBuilding(data);
-        } else{
-            window.location.href="<c:url value="/admin/building-edit?typeCode=require"/>";
+        } else {
+            window.location.href = "<c:url value="/admin/building-edit?typeCode=require"/>";
         }
     });
 
@@ -255,12 +255,12 @@
             data: JSON.stringify(data),
             contentType: "application/json",
             dataType: "JSON",
-            succsess: function (respond) {
+            success: function (response) {
                 console.log("Success");
             },
-            error: function (respond) {
+            error: function (response) {
                 console.log("failed");
-                console.log(respond);
+                console.log(response);
             }
 
         });
@@ -268,6 +268,37 @@
 
     $('#btnCancel').click(function () {
         window.location.href = "/admin/building-list";
+    });
+
+
+    $('#btnAddBuilding').click(function () {
+        var data = {}
+        var typeCode = [];
+        var formData = $('#form-edit').serializeArray();
+        $.each(formData, function (i, v) {
+            if (v.name != 'typeCode') {
+                data["" + v.name + ""] = v.value;
+            } else {
+                typeCode.push(v.value);
+            }
+        });
+        data['typeCode'] = typeCode;
+        console.log("OK")
+        //call api
+        $.ajax({
+            type: "POST",
+            url: "http://localhost:8080/api/building/",
+            data: JSON.stringify(data),
+            contentType: "application/json",
+            dataType: "JSON",
+            succsess: function (respond) {
+                console.log("Success");
+            },
+            error: function (respond) {
+                console.log("failed");
+                console.log(respond);
+            }
+        })
     });
 
 

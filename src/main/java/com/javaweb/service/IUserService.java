@@ -1,6 +1,5 @@
 package com.javaweb.service;
 
-import com.javaweb.model.dto.AssignmentBuildingDTO;
 import com.javaweb.model.dto.PasswordDTO;
 import com.javaweb.model.dto.UserDTO;
 import com.javaweb.exception.MyException;
