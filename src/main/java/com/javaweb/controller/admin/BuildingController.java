@@ -7,6 +7,7 @@ import com.javaweb.enums.TypeCode;
 import com.javaweb.model.dto.BuildingDTO;
 import com.javaweb.model.request.BuildingSearchRequest;
 import com.javaweb.model.response.BuildingSearchResponse;
+import com.javaweb.service.BuildingService;
 import com.javaweb.service.IUserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -22,36 +23,15 @@ import java.util.List;
 @Controller(value="buildingControllerOfAdmin")
 public class BuildingController {
     @Autowired
+    private BuildingService buildingService;
+    @Autowired
     private IUserService userService;
     @RequestMapping(value="/admin/building-list",method = RequestMethod.GET)
     public ModelAndView buildingList(@ModelAttribute BuildingSearchRequest buildingSearchRequest, HttpServletRequest request){
         ModelAndView mav = new ModelAndView("admin/building/list");
         mav.addObject("modelSearch",buildingSearchRequest);
-        List<BuildingSearchResponse> responseList=new ArrayList<>();
-        BuildingSearchResponse item1= new BuildingSearchResponse();
-        item1.setId(3L);
-        item1.setName("OK building");
-        item1.setAddress("91 Dai an");
-        item1.setNumberOfBasement(2L);
-        item1.setManagerName("nguyen huu truong");
-        item1.setManagerPhone("0912874246");
-        item1.setFloorArea(2L);
-        item1.setEmptyArea("2");
-        item1.setRentArea("324");
-        item1.setServiceFee("234");
-        responseList.add(item1);
-        BuildingSearchResponse item2= new BuildingSearchResponse();
-        item2.setId(4L);
-        item2.setName("HAHA building");
-        item2.setAddress("91 Dai oan");
-        item2.setNumberOfBasement(2L);
-        item2.setManagerName("nguyen huu truong");
-        item2.setManagerPhone("0912874246");
-        item2.setFloorArea(2L);
-        item2.setEmptyArea("2");
-        item2.setRentArea("324");
-        item2.setServiceFee("234");
-        responseList.add(item2);
+        List<BuildingSearchResponse> responseList=buildingService.findAll(buildingSearchRequest);
+
         mav.addObject("buildingList",responseList);
         mav.addObject("listStaffs",userService.getStaffs());
         mav.addObject("districts", District.type());

@@ -36,6 +36,8 @@ public class UserEntity extends BaseEntity {
     private List<RoleEntity> roles = new ArrayList<>();
 
 
+
+
 //    @OneToMany(mappedBy="staffs", fetch = FetchType.LAZY)
 //    private List<AssignmentBuildingEntity> assignmentBuildingEntities = new ArrayList<>();
 //
@@ -103,4 +105,6 @@ public class UserEntity extends BaseEntity {
     public void setId(Long id) {
         this.id = id;
     }
+
+
 }
