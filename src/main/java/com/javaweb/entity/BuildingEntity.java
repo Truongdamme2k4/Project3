@@ -87,11 +87,8 @@ public class BuildingEntity extends BaseEntity {
     @OneToMany(mappedBy="building",fetch=FetchType.LAZY)
     private List<RentAreaEntity> rentAreas= new ArrayList<>();
 
-    @ManyToMany(fetch = FetchType.LAZY)
-    @JoinTable(name="assignmentbuilding",
-            joinColumns = @JoinColumn(name="buildingid",nullable = false),
-            inverseJoinColumns =@JoinColumn(name="staffid",nullable = false))
-    private List<UserEntity> users =new ArrayList<>();
+    @ManyToMany(mappedBy = "buildings", fetch = FetchType.LAZY)
+    private List<UserEntity> users = new ArrayList<>();
 
     @Override
     public Long getId() {
@@ -312,4 +309,5 @@ public class BuildingEntity extends BaseEntity {
     public void setRentAreas(List<RentAreaEntity> rentAreas) {
         this.rentAreas = rentAreas;
     }
+
 }

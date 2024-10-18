@@ -13,19 +13,17 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 @Component
-public class BuildingSearchResponseConverter {
+public class BuildingDTOConverter {
     @Autowired
     private ModelMapper modelMapper;
 
-    public BuildingSearchResponse toBuildingSearchResponse(BuildingEntity k) {
-        BuildingSearchResponse buildingSearchResponse = modelMapper.map(k, BuildingSearchResponse.class);
+    public BuildingDTO toBuildingDTO(BuildingEntity k) {
+        BuildingDTO buildingDTO = modelMapper.map(k, BuildingDTO.class);
 
         List<RentAreaEntity> rentAreaEntities = k.getRentAreas();
         String rentarea = rentAreaEntities.stream().map(it -> it.getValue().toString()).collect(Collectors.joining(","));
-
-        buildingSearchResponse.setAddress(k.getStreet() + ", " + k.getWard() + ", "+ District.valueOf(k.getDistrict()).getDistrictName());
-        buildingSearchResponse.setRentArea(rentarea);
-
-        return buildingSearchResponse;
+        buildingDTO.setRentArea(rentarea);
+        buildingDTO.setDistrict(District.valueOf(k.getDistrict()).getDistrictName());
+        return buildingDTO;
     }
 }

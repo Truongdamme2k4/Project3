@@ -57,7 +57,6 @@ public class BuildingServiceImpl implements BuildingService {
         List<BuildingSearchResponse> result = new ArrayList<>();
         for(BuildingEntity item: buildingEntities) {
             BuildingSearchResponse building = buildingSearchResponseConverter.toBuildingSearchResponse(item);
-
             result.add(building);
         }
        return result;

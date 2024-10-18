@@ -1,6 +1,7 @@
 package com.javaweb.repository.custom.impl;
 
 import com.javaweb.entity.BuildingEntity;
+import com.javaweb.enums.TypeCode;
 import com.javaweb.model.request.BuildingSearchRequest;
 import com.javaweb.repository.custom.BuildingRepositoryCustom;
 import org.springframework.stereotype.Repository;
@@ -33,7 +34,7 @@ public class BuildingRepositoryImpl implements BuildingRepositoryCustom {
                 String fieldName=item.getName();
                 if(!fieldName.equals("staffId") && !fieldName.equals("typeCode") &&! fieldName.startsWith("area") && !fieldName.startsWith("rentPrice")){
                     Object value=item.get(buildingSearchRequest);
-                    if(value !=null){
+                    if(value !=null && !value.equals("")){
                         if(item.getType().getName().equals("java.lang.Long") ||item.getType().getName().equals("java.lang.Integer")
                                 || item.getType().getName().equals("java.lang.Float")){
 
@@ -79,7 +80,7 @@ public class BuildingRepositoryImpl implements BuildingRepositoryCustom {
         List<String> typeCode= buildingSearchRequest.getTypeCode();
         if(typeCode!=null && typeCode.size()>0) {
             where.append(" and(");
-            String sql =typeCode.stream().map(it -> "renttype.code like '%"+it+"%'").collect(Collectors.joining("OR"));
+            String sql =typeCode.stream().map(it -> " building.type like '%"+ TypeCode.valueOf(it) +"%'").collect(Collectors.joining(" OR "));
             where.append(sql);
             where.append(")");
         }
