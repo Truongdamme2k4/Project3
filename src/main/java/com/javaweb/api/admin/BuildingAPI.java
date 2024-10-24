@@ -37,7 +37,7 @@ public class BuildingAPI {
 
     @DeleteMapping("/{ids}")
     public void deleteBuilding(@PathVariable List<Long> ids){
-      System.out.println("da xoa");
+        System.out.println("da xoa");
     }
 
     @GetMapping("/{id}/staffs")

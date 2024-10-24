@@ -3,12 +3,14 @@ package com.javaweb.converter;
 import com.javaweb.entity.BuildingEntity;
 import com.javaweb.entity.RentAreaEntity;
 import com.javaweb.enums.District;
+import com.javaweb.enums.TypeCode;
 import com.javaweb.model.dto.BuildingDTO;
 import com.javaweb.model.response.BuildingSearchResponse;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -25,7 +27,14 @@ public class BuildingSearchResponseConverter {
 
         buildingSearchResponse.setAddress(k.getStreet() + ", " + k.getWard() + ", "+ District.valueOf(k.getDistrict()).getDistrictName());
         buildingSearchResponse.setRentArea(rentarea);
-
+        String[] typeTmps=k.getTypeCode().trim().split(",");
+        ArrayList<String> types= new ArrayList<>();
+        for(String type:typeTmps){
+            String name= TypeCode.valueOf(type).getTypeCodeName();
+            types.add(name);
+        }
+        String typeCode=types.stream().map(it -> it).collect(Collectors.joining(", "));
+        buildingSearchResponse.setTypeCode(typeCode);
         return buildingSearchResponse;
     }
 }
