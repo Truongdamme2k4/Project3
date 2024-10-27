@@ -46,7 +46,6 @@ public class BuildingController {
         mav.addObject("modelSearch",buildingSearchRequest);
         List<BuildingSearchResponse> responseList=buildingService.findAll(buildingSearchRequest);
         mav.addObject("buildingList",responseList);
-        mav.addObject("listStaffs",userService.getStaffs());
         mav.addObject("districts", District.type());
         mav.addObject("typeCodes", TypeCode.type());
         return mav;
@@ -59,6 +58,7 @@ public class BuildingController {
         mav.addObject("typeCodes", TypeCode.type());
         return mav;
     }
+
     @RequestMapping(value="/admin/building-edit-{id}",method = RequestMethod.GET)
     public ModelAndView buildingEdit(@PathVariable("id") Long Id , HttpServletRequest request){
         ModelAndView mav = new ModelAndView("admin/building/edit");

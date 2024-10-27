@@ -23,7 +23,7 @@
             <ul class="breadcrumb">
                 <li>
                     <i class="ace-icon fa fa-home home-icon"></i>
-                    <a href="#">Home</a>
+                    <a href="/admin/home">Trang chủ</a>
                 </li>
                 <li class="active">Danh sách tòa nhà</li>
             </ul><!-- /.breadcrumb -->
@@ -70,12 +70,12 @@
                                                 <div class="col-xs-6">
                                                     <label class="name">Tên tòa nhà </label>
                                                         <%--                                                    <input type="text" class="form-control" name="name" value="${modelSearch.name}">--%>
-                                                    <form:input class="form-control" path="name"></form:input>
+                                                    <form:input class="form-control" path="name"/>
                                                 </div>
                                                 <div class="col-xs-6">
                                                     <label class="name">Diện tích sàn</label>
                                                         <%--                                                    <input type="number" class="form-control" name="floorarea" value="">--%>
-                                                    <form:input class="form-control" path="floorArea"></form:input>
+                                                    <form:input class="form-control" path="floorArea"/>
                                                 </div>
                                             </div>
                                         </div>
@@ -102,8 +102,8 @@
                                         <div class="form-group">
                                             <div class="col-xs-12">
                                                 <div class="col-xs-4">
-                                                    <label class="name">Số tầng hầm</label>
-                                                   <form:input class="form-control" path="numberOfBasement"/>
+                                                    <label class="name">Tổng số tầng </label>
+                                                   <form:input class="form-control" path="numberFloor"/>
                                                 </div>
                                                 <div class="col-xs-4">
                                                     <label class="name">Hướng</label>
@@ -137,29 +137,21 @@
                                         </div>
                                         <div class="form-group">
                                             <div class="col-xs-12">
-
-                                                <div class="col-xs-4">
+                                                <div class="col-xs-6">
                                                     <label class="name">Tên quản lý</label>
                                                     <form:input class="form-control" path="managerName"/>
                                                 </div>
-                                                <div class="col-xs-5">
+                                                <div class="col-xs-6">
                                                     <label class="name">Số điện thoại quản lý</label>
                                                     <form:input class="form-control" path="managerPhone"/>
                                                 </div>
-                                                <div class="col-xs-3">
-                                                    <label class="name">Nhân viên</label>
-                                                    <form:select class="form-control" path="staffId">
-                                                        <form:option value="">---Chọn nhân viên phụ trách---</form:option>
-                                                        <form:options items="${listStaffs}"/>
 
-
-                                                    </form:select>
-                                                </div>
                                             </div>
                                         </div>
                                         <div class="form-group">
                                             <div class="col-xs-12">
                                                 <div class="col-xs-9">
+                                                <label class="name">Loại toà nhà</label>
                                                     <form:checkboxes items="${typeCodes}" path="typeCode"/>
                                                 </div>
                                             </div>
@@ -202,8 +194,8 @@
                                 </button>
                             </a>
 
-                            <%--                            </a>--%>
-                            <button class="bn633-hover bn26" title="Xoá toà nhà" id="btnDeleteBuilding">
+                                <a href="/admin/building-list">
+                            <button class="bn633-hover bn26" title="Xoá toà nhà" id="btnDeleteBuilding" type="button">
                                 <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16"
                                      fill="currentColor" class="bi bi-building-fill-x" viewBox="0 0 16 16">
                                     <path
@@ -214,6 +206,7 @@
                                     </path>
                                 </svg>
                             </button>
+                                </a>
                         </div>
                     </div>
 
@@ -238,14 +231,15 @@
                         </th>
                         <th>Tên tòa nhà</th>
                         <th>Địa chỉ</th>
-                        <th>Số tầng hầm</th>
+                        <th>Tổng số tầng</th>
+                        <th>Chung cư ở tầng</th>
                         <th>Tên quản lý</th>
                         <th>Số điện thoại quản lý</th>
                         <th>Diện tích sàn</th>
-                        <th>Diện tích trống</th>
                         <th>Diện tích thuê</th>
-                        <th>Phí môi giới</th>
-                        <th>THao tác</th>
+                        <th>Kiểu tòa nhà</th>
+                        <th>Dịch vụ phí</th>
+                        <th>Thao tác</th>
 
 
                     </tr>
@@ -263,43 +257,34 @@
 
 
                             <td>
-                                    <a href="#">${item.name}</a>
-                                </td>
+                                    <a href="/detailbuilding-${item.id}">${item.name}</a>
+                            </td>
                             <td>${item.address}</td>
-                            <td>${item.numberOfBasement}</td>
+                            <td>${item.numberFloor}</td>
+                            <td>${item.floor}</td>
                             <td>${item.managerName}</td>
                             <td>${item.managerPhone}</td>
-                            <td>${item.floorArea}</td>
-                            <td>${item.emptyArea}</td>
-                            <td>${item.rentArea}</td>
-                            <td>${item.serviceFee}</td>
+                            <td>${item.floorArea} m2</td>
+                            <td>${item.rentArea} m2</td>
+                            <td>${item.typeCode}</td>
+                            <td>${item.serviceFee} đồng</td>
                             <td>
                                 <div class="hidden-sm hidden-xs btn-group">
-<%--                                    <button class="btn btn-xs btn-success" title="Giao tòa nhà"--%>
-<%--                                            onclick="assignmentBuilding(${item.id})">--%>
-<%--                                        <i class="ace-icon fa fa-check bigger-120"></i>--%>
-<%--                                    </button>--%>
 
-<%--                                    <a href="/admin/building-edit-${item.id}" class="btn btn-xs btn-info"--%>
-<%--                                       title="Sửa tòa nhà">--%>
-
-<%--                                        <i class="ace-icon fa fa-pencil bigger-120"></i>--%>
-
-<%--                                    </a>--%>
                                         <a  title="Sửa tòa nhà"
                                            href="/admin/building-edit-${item.id}">
                                            <button class="btn-xs bn632-hover bn26" title="Sửa toà nhà" style="width: 25px; height: 25px"
-                                                onclick="deleteBuilding(${item.id})">
+                                                onclick="(${item.id})">
                                             <i class="fa-solid fa-pencil"></i>
                                         </button>
                                         </a>
-<%--                                         <a  title="Xoá tòa nhà"--%>
-<%--                                           href="/admin/building-list">--%>
+                                        <a  title="Xoá tòa nhà"
+                                           href="/admin/building-list">
                                         <button class="btn-xs bn633-hover bn26" title="Xoá toà nhà" style="width: 25px; height: 25px"
                                                 onclick="deleteBuilding(${item.id})">
                                             <i class="fa-solid fa-building-circle-xmark"></i>
                                         </button>
-<%--                                        </a>--%>
+                                        </a>
 
 
 

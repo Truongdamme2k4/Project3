@@ -7,16 +7,22 @@
 .nav-item {
   color: black;
 }
+body{
+  font-size: 18px;
+  background: url(https://images.pexels.com/photos/323705/pexels-photo-323705.jpeg?cs=srgb&dl=pexels-expect-best-79873-323705.jpg&fm=jpg) center /cover no-repeat fixed;
+  background-color: #0d6efd;
+}
 
 *{
   padding: 0;
   margin: 0;
   box-sizing: border-box;
+  font-family: "Dancing Script", cursive;
+  font-size:18px ;
 }
-
 :root {
-  --primary-color: #bf3535;
-  --color-text: #434A6E;
+  --primary-color: #3d68f6;
+  --color-text: #273aa1;
 }
 
 a{
@@ -64,30 +70,6 @@ a{
   }
 }
 
-.vip::before {
-  content: "vip";
-  position: absolute;
-  background-color: #FFC321;
-  right: 0.6rem;
-  width: 3rem;
-  height: 2.6rem;
-  text-align: center;
-  text-transform: uppercase;
-  color: white;
-  font-weight: 700;
-  line-height: 2rem;
-  animation: 0.5s linear 1s infinite reverse flicker;
-}
-
-.vip::after {
-  content: "";
-  position: absolute;
-  top: 1.6rem;
-  right: 0.6rem;
-  border: 1rem solid;
-  border-width: 1rem 1.5rem;
-  border-color: transparent #FFC321;
-}
 
 /* ************************************************* */
 .carousel-item{
@@ -168,6 +150,10 @@ a{
   color: white;
   font-size: 0.86rem;
 }
+input::placeholder {
+  color: #000000;
+  opacity: 0.5;
+}
 
 .search-option {
   width: 100%;
@@ -175,7 +161,7 @@ a{
   position: relative;
   background: 0;
   display: block;
-  color: #fff;
+  color: #353535;
   border: 1px solid rgba(255, 255, 255, 0.6);
   border-radius: 20px;
   box-sizing: border-box;
@@ -204,6 +190,7 @@ a{
 
 .content {
   padding: 3rem 0 2rem;
+  min-height: 350px;
 }
 
 .title-cover {
@@ -254,9 +241,11 @@ a{
 
 .product1-conntent-header > a {
   color: var(--color-text);
-  font-size: 1rem;
+  font-size: 20px;
   font-weight: 700;
   letter-spacing: 0.03rem;
+  text-transform: capitalize;
+
 }
 
 .product1-conntent-header > a:hover {
@@ -283,7 +272,7 @@ a{
   font-size: 0.9rem;
   font-weight: 400;
   padding-bottom: 0.2rem;
-  color: #6c6c6cb8;
+  color: rgba(0, 0, 0, 0.72);
 
 }
 
@@ -300,11 +289,11 @@ a{
 }
 
 .product1-footer-cost {
-  color: #3b3bed;
-  font-size: 1.7rem;
+  color: #f3375b;
+  font-size: 1.1rem;
   font-weight: 700;
   cursor: default;
-  font-family: fantasy;
+
 }
 
 
@@ -386,16 +375,7 @@ a{
   max-width: 100%;
   height: auto;
 }
-/* .section_why .wrap .wrap_itemp .content_p {
-    display: block;
-    float: left;
-    width: calc(100% - 42px - 30px);
-    -webkit-width: calc(100% - 42px - 30px);
-    -moz-width: calc(100% - 42px - 30px);
-    -o-width: calc(100% - 42px - 30px);
-    -os-width: calc(100% - 42px - 30px);
-    margin-left: 30px;
-} */
+
 
 .content_p {
   margin-left: 30px;
@@ -483,7 +463,7 @@ h4 {
   background-repeat: no-repeat;
   background-size: cover;
   background-position: top center;
-  margin-top: 30px;
+  /*margin-top: 30px;*/
   color: #fff;
 }
 
@@ -628,11 +608,12 @@ h4 {
   border-radius: 50px;
   cursor: pointer;
   border: 0;
-  background-color: #dfdfdf;
+  /*color: black;*/
+  background-color: #ffffff;
   box-shadow: rgb(0 0 0 / 5%) 0 0 8px;
   letter-spacing: 1.5px;
 
-  font-size: 10px;
+  font-size: 14px;
   transition: all 0.5s ease;
 }
 
@@ -653,14 +634,33 @@ h4 {
 }
 a:hover{
   text-decoration: none;
+  color: #fff;
 }
 .inner-nhom7{
   font-size: 25px;
   font-weight: 800;
   color: #00b1ff;
-  border: #0d6efd;
+}
+.inner-nhom7 i{
+  font-size: 40px;
+  font-weight: 800;
+  color: #00b1ff;
+}
+.inner-nhom7:hover {
+  font-size: 25px;
+  font-weight: 800;
+  color: #23ae81;
+
 }
 input::placeholder{
-  color: #fff;
+  color: #000000;
   font-style: italic;
+}
+th{
+  display: flex;
+
+  font-size: 20px;
+}
+td{
+  font-size: 20px;
 }

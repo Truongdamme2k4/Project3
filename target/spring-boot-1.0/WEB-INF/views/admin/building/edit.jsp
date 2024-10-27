@@ -18,7 +18,7 @@
             <ul class="breadcrumb">
                 <li>
                     <i class="ace-icon fa fa-home home-icon"></i>
-                    <a href="#">Home</a>
+                    <a href="/admin/home"> Trang chủ </a>
                 </li>
                 <li class="active">Danh sách tòa nhà</li>
             </ul><!-- /.breadcrumb -->
@@ -31,7 +31,7 @@
 
             <div class="page-header">
                 <h1 style="font-family: 'Times New Roman', Times, serif;">
-                    Sửa hoặc thêm tòa nhà
+                    Sửa hoặc thêm tòa nhà (Vui lòng điền đủ thông tin)
 
                 </h1>
             </div><!-- /.page-header -->
@@ -54,7 +54,7 @@
                                 </div>
                             </div>
 
-                            <div class="form-group">
+                            <div class="form-distrists">
                                 <label class="col-xs-2">Quận</label>
                                 <div class="col-xs-3">
 
@@ -77,16 +77,22 @@
                                     <form:input class="form-control" path="street"/>
                                 </div>
                             </div>
+<%--                            <div class="form-group">--%>
+<%--                                <label class="col-xs-2">Kết cấu</label>--%>
+<%--                                <div class="col-xs-10">--%>
+<%--                                    <form:input class="form-control" />--%>
+<%--                                </div>--%>
+<%--                            </div>--%>
                             <div class="form-group">
-                                <label class="col-xs-2">Kết cấu</label>
+                                <label class="col-xs-2">Tổng số tầng</label>
                                 <div class="col-xs-10">
-                                    <form:input class="form-control" path="typeCode"/>
+                                    <form:input class="form-control" path="numberFloor"/>
                                 </div>
                             </div>
                             <div class="form-group">
-                                <label class="col-xs-2">Số tầng hầm</label>
+                                <label class="col-xs-2">Chung cư ở tầng</label>
                                 <div class="col-xs-10">
-                                    <form:input class="form-control" path="numberOfBasement"/>
+                                    <form:input class="form-control" path="floor"/>
                                 </div>
                             </div>
                             <div class="form-group">
@@ -119,13 +125,56 @@
                                     <form:input class="form-control" path="rentPrice"/>
                                 </div>
                             </div>
+
                             <div class="form-group">
-                                <label class="col-xs-2">Mô tả giá</label>
+                                <label class="col-xs-2">Dịch vụ phí</label>
                                 <div class="col-xs-10">
-                                    <input class="form-control" type="text" id="motagia" name="motatgia" value="">
+                                    <form:input class="form-control" path="serviceFee"/>
+                                </div>
+                            </div><div class="form-group">
+                                <label class="col-xs-2">Phí ô tô</label>
+                                <div class="col-xs-10">
+                                    <form:input class="form-control" path="carFee"/>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label class="col-xs-2">Phí xe máy </label>
+                                <div class="col-xs-10">
+                                    <form:input class="form-control" path="motoFee"/>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label class="col-xs-2">Đặt cọc</label>
+                                <div class="col-xs-10">
+                                    <form:input class="form-control" path="deposit"/>
                                 </div>
                             </div>
 
+
+                            <div class="form-group">
+                                <label class="col-xs-2">Tên quản lý</label>
+                                <div class="col-xs-10">
+                                    <form:input class="form-control" path="managerName"/>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label class="col-xs-2">SĐT quản lý</label>
+                                <div class="col-xs-10">
+                                    <form:input class="form-control" path="managerPhone"/>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label class="col-xs-2">Gán link ảnh toà nhà</label>
+                                <div class="col-xs-10">
+                                    <form:input class="form-control" path="avatar"/>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label class="col-xs-2">Ghi chú</label>
+                                <div class="col-xs-10">
+                                    <form:input class="form-control" path="note"/>
+                                </div>
+                            </div>
                             <div class="form-group">
                                 <label class="col-xs-2">Loại tòa nhà</label>
                                 <div class="col-xs-9">
@@ -137,7 +186,7 @@
                                 <div class="col-xs-9" style="padding-bottom: 8px">
                                     <c:if test="${not empty buildingEdit.id}">
                                         <button type="button" class="btn btn-primary" id="btnAddOrBuilding"
-                                        style="margin-right: 8px">
+                                        style="margin-right: 8px" >
                                             Cập nhật tòa nhà
                                         </button>
                                         <button type="button" class="btn btn-primary" id="btnCancel">Hủy thao tác
@@ -165,6 +214,26 @@
         </div><!-- /.page-content -->
     </div>
 </div><!-- /.main-content -->
+
+<!-- Modal -->
+<div class="modal fade" id="infoModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true" style=font-size:20px;">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel">Thông báo</h5>
+
+            </div>
+            <div class="modal-body">
+                Vui lòng nhập đầy đủ thông tin !!!
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Đóng</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+
 <script>
     $('#btnAddOrBuilding').click(function () {
         var data = {}
@@ -178,10 +247,13 @@
             }
         });
         data['typeCode'] = typeCode;
-        if (typeCode != "") {
+        if (typeCode != "" && data["district"]!= "") {
             addOrUpdateBuilding(data);
+            window.location.href = "<c:url value="/admin/building-list"/>";
         } else {
-            window.location.href = "<c:url value="/admin/building-edit?typeCode=require"/>";
+            $('#infoModal').modal('show');
+
+
         }
     });
 
@@ -238,7 +310,6 @@
             }
         })
     });
-
 
 </script>
 </body>

@@ -1,22 +1,21 @@
 package com.javaweb.service.impl;
 
+import com.javaweb.converter.BuildingDTOtoEntityConverter;
 import com.javaweb.converter.BuildingSearchResponseConverter;
 import com.javaweb.entity.BuildingEntity;
 import com.javaweb.entity.UserEntity;
 import com.javaweb.model.dto.BuildingDTO;
 import com.javaweb.model.request.BuildingSearchRequest;
 import com.javaweb.model.response.BuildingSearchResponse;
-import com.javaweb.model.response.ResponseDTO;
 
-import com.javaweb.model.response.StaffResponseDTO;
 import com.javaweb.repository.BuildingRepository;
 import com.javaweb.repository.UserRepository;
 import com.javaweb.service.BuildingService;
 
+import com.javaweb.service.RentAreaService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.List;
 
 @Service
@@ -28,29 +27,11 @@ public class BuildingServiceImpl implements BuildingService {
     @Autowired
     private UserRepository userRepository;
 
-    @Override
-    public ResponseDTO listStaffs(Long buildingId) {
-        BuildingEntity building = buildingRepository.findById(buildingId).get();
-        List<UserEntity> staffs=userRepository.findByStatusAndRoles_Code(1,"STAFF");
-        List<UserEntity> staffAssignment= building.getUsers();
-        List<StaffResponseDTO> staffResponseDTOS=new ArrayList<>();
-        ResponseDTO responseDTO=new ResponseDTO();
-        for(UserEntity item:staffs){
-            StaffResponseDTO staffResponseDTO=new StaffResponseDTO();
-            staffResponseDTO.setFullName(item.getFullName());
-            staffResponseDTO.setStaffId(item.getId());
-            if(staffAssignment.contains(item)){
-                staffResponseDTO.setChecked("checked");
-            } else{
-                staffResponseDTO.setChecked("");
-            }
-            staffResponseDTOS.add(staffResponseDTO);
-        }
-        responseDTO.setData(staffResponseDTOS);
-        responseDTO.setMessage("success");
-        return responseDTO;
-    }
+    @Autowired
+    private RentAreaService rentAreaService;
 
+    @Autowired
+    private BuildingDTOtoEntityConverter buildingDTOtoEntityConverter;
     @Override
     public List<BuildingSearchResponse> findAll(BuildingSearchRequest buildingSearchRequest) {
         List<BuildingEntity> buildingEntities = buildingRepository.findAll(buildingSearchRequest);
@@ -60,6 +41,27 @@ public class BuildingServiceImpl implements BuildingService {
             result.add(building);
         }
         return result;
+    }
+
+    @Override
+    public void deleteBuildings(List<Long> ids) {
+        rentAreaService.deleteByBuildings(ids);
+
+        for(Long id : ids){
+            buildingRepository.deleteById(id);
+        }
+    }
+
+    @Override
+    public void addOrUpdateBulding(BuildingDTO buildingDTO) {
+        if(buildingDTO.getId()==null){
+            BuildingEntity buildingEntity=buildingDTOtoEntityConverter.toBuildingEntity(buildingDTO);
+            buildingRepository.save(buildingEntity);
+        } else {
+            BuildingEntity buildingEntity = buildingRepository.findById(buildingDTO.getId()).get();
+            buildingEntity = buildingDTOtoEntityConverter.toBuildingEntity(buildingDTO);
+            buildingRepository.save(buildingEntity);
+        }
     }
 
 
