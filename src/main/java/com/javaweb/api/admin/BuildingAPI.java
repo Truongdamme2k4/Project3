@@ -18,14 +18,14 @@ public class BuildingAPI {
     private BuildingService buildingService;
 
     @PostMapping
-    public BuildingDTO addOrUpdateBuilding(@RequestBody BuildingDTO buildingDTO){
-        return buildingDTO;
+    public void addOrUpdateBuilding(@RequestBody BuildingDTO buildingDTO){
+         buildingService.addOrUpdateBulding(buildingDTO);
+
     }
 
     @DeleteMapping("/{ids}")
     public void deleteBuilding(@PathVariable List<Long> ids){
-        //Xuong DB de xoa building theo list id tra ve
-        System.out.println("ok");
+        buildingService.deleteBuildings(ids);
     }
 
     @GetMapping("/{id}/staffs")
@@ -36,6 +36,6 @@ public class BuildingAPI {
 
     @PostMapping("/assignment")
     public void updateAssignmentBuilding(@RequestBody AssignmentBuildingDTO assignmentBuildingDTO){
-        System.out.println("OK");
+         buildingService.updateAssignmentBuilding(assignmentBuildingDTO);
     }
 }

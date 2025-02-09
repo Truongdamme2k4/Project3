@@ -1,8 +1,11 @@
 package com.javaweb.service.impl;
 
+import com.javaweb.converter.BuildingDTOtoEntityConverter;
 import com.javaweb.converter.BuildingSearchResponseConverter;
 import com.javaweb.entity.BuildingEntity;
 import com.javaweb.entity.UserEntity;
+import com.javaweb.model.dto.AssignmentBuildingDTO;
+import com.javaweb.model.dto.BuildingDTO;
 import com.javaweb.model.request.BuildingSearchRequest;
 import com.javaweb.model.response.BuildingSearchResponse;
 import com.javaweb.model.response.ResponseDTO;
@@ -12,6 +15,7 @@ import com.javaweb.repository.UserRepository;
 import com.javaweb.service.BuildingService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -25,6 +29,12 @@ public class BuildingServiceImpl implements BuildingService {
     private BuildingRepository buildingRepository;
     @Autowired
     private UserRepository userRepository;
+
+    @Autowired
+    private BuildingDTOtoEntityConverter buildingDTOtoEntityConverter;
+
+    @Autowired
+    private BuildingService buildingService;
 
     public ResponseDTO listStaff(Long buildingId) {
         BuildingEntity building = buildingRepository.findById(buildingId).get();
@@ -58,6 +68,37 @@ public class BuildingServiceImpl implements BuildingService {
             result.add(building);
         }
         return result;
+    }
+
+
+    @Transactional
+    @Override
+    public void deleteBuildings(List<Long> ids) {
+        buildingRepository.deleteByIdIn(ids);
+    }
+
+    @Override
+    public void addOrUpdateBulding(BuildingDTO buildingDTO) {
+        if(buildingDTO.getId()==null){
+            BuildingEntity buildingEntity=buildingDTOtoEntityConverter.toBuildingEntity(buildingDTO);
+            buildingRepository.save(buildingEntity);
+        } else {
+            BuildingEntity buildingEntity = buildingRepository.findById(buildingDTO.getId()).get();
+            buildingEntity = buildingDTOtoEntityConverter.toBuildingEntity(buildingDTO);
+            buildingRepository.save(buildingEntity);
+        }
+    }
+
+    @Override
+    public void updateAssignmentBuilding(AssignmentBuildingDTO assignmentBuildingDTO) {
+           BuildingEntity buildingEntity= buildingRepository.findById(assignmentBuildingDTO.getBuildingId()).get();
+           List<UserEntity> userEntities= buildingEntity.getUserEntities();
+           userEntities.clear();
+           for(Long id:assignmentBuildingDTO.getStaffs()){
+               userEntities.add(userRepository.findById(id).get());
+           }
+           buildingEntity.setUserEntities(userEntities);
+
     }
 
 

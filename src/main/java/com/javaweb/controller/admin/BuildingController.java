@@ -2,11 +2,14 @@ package com.javaweb.controller.admin;
 
 
 
+import com.javaweb.converter.BuildingDTOConverter;
+import com.javaweb.entity.BuildingEntity;
 import com.javaweb.enums.District;
 import com.javaweb.enums.TypeCode;
 import com.javaweb.model.dto.BuildingDTO;
 import com.javaweb.model.request.BuildingSearchRequest;
 import com.javaweb.model.response.BuildingSearchResponse;
+import com.javaweb.repository.BuildingRepository;
 import com.javaweb.repository.custom.BuildingRepositoryCustom;
 import com.javaweb.service.BuildingService;
 import com.javaweb.service.IUserService;
@@ -29,6 +32,12 @@ public class BuildingController {
 
     @Autowired
     private IUserService userService;
+
+    @Autowired
+    private BuildingRepository buildingRepository;
+
+    @Autowired
+    private BuildingDTOConverter buildingDTOConverter;
 
     @RequestMapping(value="/admin/building-list", method = RequestMethod.GET)
     public ModelAndView buildingList(@ModelAttribute BuildingSearchRequest buildingSearchRequest, HttpServletRequest request){
@@ -53,12 +62,12 @@ public class BuildingController {
         return mav;
     }
 
-@RequestMapping(value="/admin/building-edit-{}", method = RequestMethod.GET)
-    public ModelAndView buildingEdit(@PathVariable("id") Long id, HttpServletRequest request){
+    @RequestMapping(value="/admin/building-edit-{id}",method = RequestMethod.GET)
+    public ModelAndView buildingEdit(@PathVariable("id") Long Id , HttpServletRequest request){
         ModelAndView mav = new ModelAndView("admin/building/edit");
-        //Xuong DB Lay building theo id
-        BuildingDTO buildingDTO = new BuildingDTO();
-        mav.addObject("buildingEdit", buildingDTO);
+        BuildingEntity buildingEntity = buildingRepository.findById(Id).get();
+        BuildingDTO buildingDTO=buildingDTOConverter.toBuildingDTO(buildingEntity);
+        mav.addObject("buildingEdit",buildingDTO);
         mav.addObject("districts", District.type());
         mav.addObject("typeCodes", TypeCode.type());
         return mav;

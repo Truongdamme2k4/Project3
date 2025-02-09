@@ -105,4 +105,12 @@ public class UserEntity extends BaseEntity {
     public void setId(Long id) {
         this.id = id;
     }
+
+    public List<BuildingEntity> getBuildingEntityList() {
+        return buildingEntityList;
+    }
+
+    public void setBuildingEntityList(List<BuildingEntity> buildingEntityList) {
+        this.buildingEntityList = buildingEntityList;
+    }
 }

@@ -2,8 +2,11 @@ package com.javaweb.repository.custom.impl;
 
 import com.javaweb.entity.BuildingEntity;
 import com.javaweb.enums.TypeCode;
+import com.javaweb.model.dto.AssignmentBuildingDTO;
 import com.javaweb.model.request.BuildingSearchRequest;
+import com.javaweb.repository.BuildingRepository;
 import com.javaweb.repository.custom.BuildingRepositoryCustom;
+import org.springframework.beans.factory.annotation.Autowired;
 
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
@@ -17,15 +20,18 @@ public class BuildingRepositoryImpl implements BuildingRepositoryCustom {
     @PersistenceContext
     private EntityManager entityManager;
 
+    @Autowired
+    private BuildingRepository buildingRepository;
 
 
-    public static void joinTable(BuildingSearchRequest buildingSearchRequest,StringBuilder sql){
-        Long staffId=buildingSearchRequest.getStaffId();
-        if(staffId!=null){
-            sql.append(" inner join assignmentbuilding on building.id=assignmentbuilding.buildingid ");
-        }
 
-    }
+//    public static void joinTable(BuildingSearchRequest buildingSearchRequest,StringBuilder sql){
+//        Long staffId=buildingSearchRequest.getStaffId();
+//        if(staffId!=null){
+//            sql.append(" inner join assignmentbuilding on building.id=assignmentbuilding.buildingid ");
+//        }
+//
+//    }
     public static void queryNomal(BuildingSearchRequest buildingSearchRequest,StringBuilder where){
         try{
             Field[] fields=BuildingSearchRequest.class.getDeclaredFields();
@@ -52,7 +58,7 @@ public class BuildingRepositoryImpl implements BuildingRepositoryCustom {
     public static void querySpecial(BuildingSearchRequest buildingSearchRequest,StringBuilder where){
         Long staffId= buildingSearchRequest.getStaffId();
         if(staffId!=null) {
-            where.append(" and assignmentbuilding.staffid="+staffId);
+            where.append(" and exists (select * from assignmentbuilding where assignmentbuilding.buildingid = building.id and assignmentbuilding.staffid="+staffId+") ");
         }
         Long rentAreaFrom=buildingSearchRequest.getAreaFrom();
         Long rentAreaTo=buildingSearchRequest.getAreaTo();
@@ -92,7 +98,7 @@ public class BuildingRepositoryImpl implements BuildingRepositoryCustom {
     public List<BuildingEntity> findAll(BuildingSearchRequest buildingSearchRequest) {
         StringBuilder sql = new StringBuilder(" select * from building ");
         StringBuilder where= new StringBuilder(" where 1=1 ");
-        joinTable(buildingSearchRequest,sql);
+//        joinTable(buildingSearchRequest,sql);
         queryNomal(buildingSearchRequest,where);
         querySpecial(buildingSearchRequest,where);
         sql.append(where);
@@ -101,4 +107,7 @@ public class BuildingRepositoryImpl implements BuildingRepositoryCustom {
 
         return query.getResultList();
     }
+
+
+
 }

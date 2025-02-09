@@ -371,11 +371,11 @@
 
     function assingment(data){
         $.ajax({
+            url: "${buildingAPI}/" + 'assignment' ,
             type: "POST",
-            url: "${buildingAPI}/" + 'assignment',
-            data: JSON.stringfy(data),
+            data: JSON.stringify(data),
             contentType:"application/json",
-            dataType:"JSON",
+            dataType: 'json',
             success: function(response){
                 console.info("success");
             },
@@ -392,30 +392,31 @@
         $('#listForm').submit();
     });
 
-    function deleteBuilding(id){
-        var buildingId = [id];
+    function deleteBuilding(data) {
+        var buildingId = [data];
         deleteBuildings(buildingId);
     }
 
-    $('#btnDeleteBuilding').click(function(e){
+    $('#btnDeleteBuilding').click(function (e) {
         e.preventDefault();
-        var buildingIds = $('#tableList').find('tbody input[type= checkbox]:checked').map(function(){
+        var buildingIds = $('#tableList').find('tbody input[type=checkbox]:checked').map(function () {
             return $(this).val();
         }).get();
         deleteBuildings(buildingIds);
     });
-    function deleteBuildings(data){
+
+    function deleteBuildings(data) {
         $.ajax({
-            type: "Delete",
-            url: "${buildingAPI}/" + data,
-            data: JSON.stringfy(data),
-            contentType:"application/json",
-            dataType:"JSON",
-            success: function(respond){
-                console.success("Success");
+            type: "DELETE",
+            url: "/api/building/" + data,
+            data: JSON.stringify(data),
+            contentType: "application/json",
+            dataType: "JSON",
+            success: function (respond) {
+                console.log("Success");
             },
-            error: function(respond){
-                console.log("Failed");
+            error: function (respond) {
+                console.log("failed");
                 console.log(respond);
             }
         });
