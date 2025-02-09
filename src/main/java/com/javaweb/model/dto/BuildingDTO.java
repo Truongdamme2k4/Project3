@@ -6,28 +6,18 @@ import java.util.Map;
 
 public class BuildingDTO extends AbstractDTO{
     private String name;
+    private Long floorArea;
     private String district;
     private String ward;
     private String street;
-    private Long numberFloor;
-    private Long floor;
-    private Long floorArea;
+    private Long numberOfBasement;
     private String direction;
-    private String level;
+    private Long level;
     private String rentArea;
     private Long rentPrice;
-    private String rentPriceDescription;
-    private Long serviceFee;
-    private Long carFee;
-    private Long motoFee;
-    private Long electricFee;
-    private String deposit;
-    private String rentTime;
-    private String note;
     private String managerName;
     private String managerPhone;
     private List<String> typeCode;
-    private String avatar;
 
     public String getName() {
         return name;
@@ -35,6 +25,14 @@ public class BuildingDTO extends AbstractDTO{
 
     public void setName(String name) {
         this.name = name;
+    }
+
+    public Long getFloorArea() {
+        return floorArea;
+    }
+
+    public void setFloorArea(Long floorArea) {
+        this.floorArea = floorArea;
     }
 
     public String getDistrict() {
@@ -61,13 +59,12 @@ public class BuildingDTO extends AbstractDTO{
         this.street = street;
     }
 
-
-    public Long getFloorArea() {
-        return floorArea;
+    public Long getNumberOfBasement() {
+        return numberOfBasement;
     }
 
-    public void setFloorArea(Long floorArea) {
-        this.floorArea = floorArea;
+    public void setNumberOfBasement(Long numberOfBasement) {
+        this.numberOfBasement = numberOfBasement;
     }
 
     public String getDirection() {
@@ -78,11 +75,11 @@ public class BuildingDTO extends AbstractDTO{
         this.direction = direction;
     }
 
-    public String getLevel() {
+    public Long getLevel() {
         return level;
     }
 
-    public void setLevel(String level) {
+    public void setLevel(Long level) {
         this.level = level;
     }
 
@@ -102,70 +99,6 @@ public class BuildingDTO extends AbstractDTO{
         this.rentPrice = rentPrice;
     }
 
-    public String getRentPriceDescription() {
-        return rentPriceDescription;
-    }
-
-    public void setRentPriceDescription(String rentPriceDescription) {
-        this.rentPriceDescription = rentPriceDescription;
-    }
-
-    public Long getServiceFee() {
-        return serviceFee;
-    }
-
-    public void setServiceFee(Long serviceFee) {
-        this.serviceFee = serviceFee;
-    }
-
-    public Long getCarFee() {
-        return carFee;
-    }
-
-    public void setCarFee(Long carFee) {
-        this.carFee = carFee;
-    }
-
-    public Long getMotoFee() {
-        return motoFee;
-    }
-
-    public void setMotoFee(Long motoFee) {
-        this.motoFee = motoFee;
-    }
-
-    public Long getElectricFee() {
-        return electricFee;
-    }
-
-    public void setElectricFee(Long electricFee) {
-        this.electricFee = electricFee;
-    }
-
-    public String getDeposit() {
-        return deposit;
-    }
-
-    public void setDeposit(String deposit) {
-        this.deposit = deposit;
-    }
-
-    public String getRentTime() {
-        return rentTime;
-    }
-
-    public void setRentTime(String rentTime) {
-        this.rentTime = rentTime;
-    }
-
-    public String getNote() {
-        return note;
-    }
-
-    public void setNote(String note) {
-        this.note = note;
-    }
-
     public String getManagerName() {
         return managerName;
     }
@@ -182,35 +115,12 @@ public class BuildingDTO extends AbstractDTO{
         this.managerPhone = managerPhone;
     }
 
+
     public List<String> getTypeCode() {
         return typeCode;
     }
 
     public void setTypeCode(List<String> typeCode) {
         this.typeCode = typeCode;
-    }
-
-    public String getAvatar() {
-        return avatar;
-    }
-
-    public void setAvatar(String avatar) {
-        this.avatar = avatar;
-    }
-
-    public Long getNumberFloor() {
-        return numberFloor;
-    }
-
-    public void setNumberFloor(Long numberFloor) {
-        this.numberFloor = numberFloor;
-    }
-
-    public Long getFloor() {
-        return floor;
-    }
-
-    public void setFloor(Long floor) {
-        this.floor = floor;
     }
 }

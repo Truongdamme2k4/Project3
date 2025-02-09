@@ -34,8 +34,10 @@ public class RoleEntity extends BaseEntity {
     }
 
     @ManyToMany(mappedBy = "roles", fetch = FetchType.LAZY)
-    private List<UserEntity> users = new ArrayList<>();
+    private List<UserEntity> user = new ArrayList<>();
 
+//    @OneToMany(mappedBy="roles",fetch = FetchType.LAZY)
+//    private List<UserRoleEntity> userRoleEntities = new ArrayList<>();
 
     public String getName() {
         return name;
@@ -54,11 +56,11 @@ public class RoleEntity extends BaseEntity {
     }
 
     public List<UserEntity> getUsers() {
-        return users;
+        return user;
     }
 
     public void setUsers(List<UserEntity> users) {
-        this.users = users;
+        this.user = users;
     }
 
 }

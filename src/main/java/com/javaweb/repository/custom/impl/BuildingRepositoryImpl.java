@@ -4,7 +4,6 @@ import com.javaweb.entity.BuildingEntity;
 import com.javaweb.enums.TypeCode;
 import com.javaweb.model.request.BuildingSearchRequest;
 import com.javaweb.repository.custom.BuildingRepositoryCustom;
-import org.springframework.stereotype.Repository;
 
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
@@ -14,16 +13,17 @@ import java.util.Collections;
 import java.util.List;
 import java.util.stream.Collectors;
 
-@Repository
 public class BuildingRepositoryImpl implements BuildingRepositoryCustom {
     @PersistenceContext
     private EntityManager entityManager;
 
+
+
     public static void joinTable(BuildingSearchRequest buildingSearchRequest,StringBuilder sql){
-          Long staffId=buildingSearchRequest.getStaffId();
-          if(staffId!=null){
-             sql.append(" inner join assignmentbuilding on building.id=assignmentbuilding.buildingid ");
-          }
+        Long staffId=buildingSearchRequest.getStaffId();
+        if(staffId!=null){
+            sql.append(" inner join assignmentbuilding on building.id=assignmentbuilding.buildingid ");
+        }
 
     }
     public static void queryNomal(BuildingSearchRequest buildingSearchRequest,StringBuilder where){
@@ -68,7 +68,7 @@ public class BuildingRepositoryImpl implements BuildingRepositoryCustom {
         }
         Long rentPriceFrom=buildingSearchRequest.getRentPriceFrom();
         Long rentPriceTo=buildingSearchRequest.getRentPriceTo();
-        if(rentAreaFrom !=null || rentAreaTo !=null) {
+        if(rentPriceFrom !=null || rentPriceTo !=null) {
             if(rentPriceFrom !=null	) {
                 where.append("  and building.rentprice >= "+ rentPriceFrom);
             }

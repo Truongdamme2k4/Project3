@@ -1,12 +1,13 @@
 package com.javaweb.enums;
 
-import java.net.Proxy;
 import java.util.Map;
 import java.util.TreeMap;
 
 public enum TypeCode {
+    TANG_TRET("Tầng trệt"),
     NGUYEN_CAN("Nguyên căn"),
     NOI_THAT("Nội thất");
+
 
     private final String name;
 
@@ -25,6 +26,4 @@ public enum TypeCode {
         }
         return typeCodes;
     }
-
-
 }

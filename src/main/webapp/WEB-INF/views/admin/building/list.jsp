@@ -1,168 +1,171 @@
-<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" %>
+
+<%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%@include file="/common/taglib.jsp" %>
+<c:url var="buildingListURL" value="/admin/building-list"/>
+<c:url var="buildingAPI" value="/api/building"/>
 <html>
 <head>
-    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-    <title>
-        <%--<spring:message code="label.user.list"/>--%>
-        Danh sách tòa nhà
-    </title>
-
+    <title>Danh sách tòa nhà</title>
 </head>
 <body>
+
+
 <div class="main-content">
     <div class="main-content-inner">
         <div class="breadcrumbs" id="breadcrumbs">
             <script type="text/javascript">
-                try {
-                    ace.settings.check('breadcrumbs', 'fixed')
-                } catch (e) {
-                }
+                try{ace.settings.check('breadcrumbs' , 'fixed')}catch(e){}
             </script>
 
             <ul class="breadcrumb">
                 <li>
                     <i class="ace-icon fa fa-home home-icon"></i>
-                    <a href="/admin/home">Trang chủ</a>
+                    <a href="#">Trang chủ</a>
                 </li>
-                <li class="active">Danh sách tòa nhà</li>
+                <li class="active">Quản lý tòa nhà</li>
             </ul><!-- /.breadcrumb -->
-
-
         </div>
 
-        <div class="page-content">
+<%--        <div class="page-content">--%>
+<%--            <div class="page-header">--%>
+<%--                <h1>--%>
+<%--                    Danh sách tòa nhà--%>
+<%--                    <small>--%>
+<%--                        <i class="ace-icon fa fa-angle-double-right"></i>--%>
+<%--                        overview &amp; stats--%>
+<%--                    </small>--%>
+<%--                </h1>--%>
+<%--            </div><!-- /.page-header -->--%>
 
-
-            <div class="page-header">
-                <h1>
-                    DANH SÁCH TOÀ NHÀ
-
-                </h1>
-            </div><!-- /.page-header -->
-
-            <div class="row">
-                <div class="col-12 " style="display: flex; justify-content: space-around">
+            <div class = "row">
+                <div class="col-xs-12">
                     <div class="widget-box ui-sortable-handle">
                         <div class="widget-header">
-                            <h5 class="widget-title">Tìm kiếm toà nhà</h5>
+                            <h5 class="widget-title">Tìm kiếm</h5>
 
                             <div class="widget-toolbar">
-
 
                                 <a href="#" data-action="collapse">
                                     <i class="ace-icon fa fa-chevron-up"></i>
                                 </a>
-
-
                             </div>
                         </div>
 
                         <div class="widget-body" style="font-family: 'Times New Roman', Times, serif;">
-                            <div class="widget-main">
-                                <form:form id="ListForm" modelAttribute="modelSearch" action="/admin/building-list"
-                                           method="GET">
-
-                                    <div class="row">
-                                         <div class="col-xs-12" >
-                                        <div class="form-group">
-                                            <div class="col-xs-12">
-                                                <div class="col-xs-6">
-                                                    <label class="name">Tên tòa nhà </label>
-                                                        <%--                                                    <input type="text" class="form-control" name="name" value="${modelSearch.name}">--%>
+                            <div class="widget-main" >
+                               <form:form id="listForm" modelAttribute="modelSearch" action="${buildingListURL}" method="GET">
+                                 <div class="row">
+                                    <div class="form-group">
+                                        <div class="col-xs-12">
+                                            <div class="col-xs-6">
+                                                <label class="name">Tên tòa nhà</label>
+<%--                                                <input type="text" class="form-control" name="name" value="${modelSearch.name}">--%>
                                                     <form:input class="form-control" path="name"/>
-                                                </div>
-                                                <div class="col-xs-6">
-                                                    <label class="name">Diện tích sàn</label>
-                                                        <%--                                                    <input type="number" class="form-control" name="floorarea" value="">--%>
-                                                    <form:input class="form-control" path="floorArea"/>
-                                                </div>
+                                            </div>
+                                            <div class="col-xs-6">
+                                                <label class="name">Diện tích sàn</label>
+<%--                                                <input type="number" class="form-control" name="floorArea" value="${modelSearch.floorArea}">--%>
+                                                     <form:input class="form-control" path="floorArea"/>
                                             </div>
                                         </div>
+                                    </div>
+                                     <div class="form-group">
+                                         <div class="col-xs-12">
+                                             <div class="col-xs-2">
+                                                 <label class="name">Quận</label>
+                                                 <form:select class="form-control" path="district">
+                                                     <form:option value="">---Chọn Quận---</form:option>
+                                                     <form:options items="${districts}"/>
+                                                 </form:select>
+                                             </div>
+                                             <div class="col-xs-5">
+                                                 <label class="name">Phường</label>
+<%--                                                 <input type="number" class="form-control" name="ward" value="${modelSearch.ward}">--%>
+                                                 <form:input class="form-control" path="ward"/>
+                                             </div>
+                                             <div class="col-xs-5">
+                                                 <label class="name">Đường</label>
+<%--                                                 <input type="number" class="form-control" name="street" value="${modelSearch.street}">--%>
+                                                 <form:input class="form-control" path="street"/>
+                                             </div>
+                                         </div>
+                                     </div>
+                                     <div class="form-group">
+                                         <div class="col-xs-12">
+                                             <div class="col-xs-4">
+                                                 <label class="name">Số tầng hầm</label>
+<%--                                                 <input type="number" class="form-control" name="numberOfBasement" value="${modelSearch.numberOfBasement}">--%>
+                                                 <form:input class="form-control" path="numberOfBasement"/>
+                                             </div>
+                                             <div class="col-xs-4">
+                                                 <label class="name">Hướng</label>
+<%--                                                 <input type="number" class="form-control" name="direction" value="${modelSearch.direction}">--%>
+                                                 <form:input class="form-control" path="direction"/>
+                                             </div>
+                                             <div class="col-xs-4">
+                                                 <label class="name">Hạng</label>
+<%--                                                 <input type="number" class="form-control" name="level" value="${modelSearch.level}">--%>
+                                                 <form:input class="form-control" path="level"/>
+                                             </div>
+                                         </div>
+                                     </div>
+                                     <div class="form-group">
+                                           <div class="col-xs-12">
+                                               <div class="col-xs-3">
+                                                   <label class="name">Diện tích từ</label>
+<%--                                                   <input type="number" class="form-control" name="areaFrom" value="${modelSearch.areaFrom}">--%>
+                                                        <form:input class="form-control" path="areaFrom"/>
+                                               </div>
+                                               <div class="col-xs-3">
+                                                   <label class="name">Diện tích đến</label>
+<%--                                                   <input type="number" class="form-control" name="areaTo" value="${modelSearch.areaTo}">--%>
+                                                        <form:input class="form-control" path="areaTo"/>
+                                               </div>
+                                               <div class="col-xs-3">
+                                                   <label class="name">Giá thuê từ</label>
+<%--                                                   <input type="number" class="form-control" name="rentPriceFrom" value="${modelSearch.rentPriceFrom}">--%>
+                                                        <form:input class="form-control" path="rentPriceFrom"/>
+                                               </div>
+                                               <div class="col-xs-3">
+                                                   <label class="name">Giá thuê đến</label>
+<%--                                                   <input type="number" class="form-control" name="rentPriceTo" value="${modelSearch.rentPriceTo}">--%>
+                                                        <form:input class="form-control" path="rentPriceTo"/>
+                                               </div>
+                                           </div>
+                                       </div>
                                         <div class="form-group">
                                             <div class="col-xs-12">
-                                                <div class="col-xs-3">
-                                                    <label class="name">Quận</label>
-                                                    <form:select class="form-control" path="district">
-                                                        <form:option value="">---Chọn quận---</form:option>
-                                                        <form:options items="${districts}"/>
-
-                                                    </form:select>
-                                                </div>
-                                                <div class="col-xs-4">
-                                                    <label class="name">Phường</label>
-                                                    <form:input class="form-control" path="ward"/>
+                                                <div class="col-xs-5">
+                                                    <label class="name">Tên quản lý</label>
+<%--                                                    <input type="text" class="form-control" name="managerName" value="${modelSearch.managerName}">--%>
+                                                        <form:input class="form-control" path="managerName"/>
                                                 </div>
                                                 <div class="col-xs-5">
-                                                    <label class="name">Đường</label>
-                                                    <form:input class="form-control" path="street"/>
+                                                    <label class="name">SĐT quản lý</label>
+<%--                                                    <input type="text" class="form-control" name="managerPhone" value="${modelSearch.managerPhone}">--%>
+                                                        <form:input class="form-control" path="managerPhone"/>
                                                 </div>
-                                            </div>
-                                        </div>
-                                        <div class="form-group">
-                                            <div class="col-xs-12">
-                                                <div class="col-xs-4">
-                                                    <label class="name">Tổng số tầng </label>
-                                                   <form:input class="form-control" path="numberFloor"/>
-                                                </div>
-                                                <div class="col-xs-4">
-                                                    <label class="name">Hướng</label>
-                                                    <form:input class="form-control" path="direction"/>
-                                                </div>
-                                                <div class="col-xs-4">
-                                                    <label class="name">Hạng</label>
-                                                    <form:input class="form-control" path="level"/>
-                                                </div>
-                                            </div>
-                                        </div>
-                                        <div class="form-group">
-                                            <div class="col-xs-12">
-                                                <div class="col-xs-3">
-                                                    <label class="name">Diện tích từ</label>
-                                                    <form:input class="form-control" path="areaFrom"/>
-                                                </div>
-                                                <div class="col-xs-3">
-                                                    <label class="name">Diện tích đến</label>
-                                                    <form:input class="form-control" path="areaTo"/>
-                                                </div>
-                                                <div class="col-xs-3">
-                                                    <label class="name">Giá thuê từ</label>
-                                                    <form:input class="form-control" path="rentPriceFrom"/>
-                                                </div>
-                                                <div class="col-xs-3">
-                                                    <label class="name">Giá thuê đến</label>
-                                                    <form:input class="form-control" path="rentPriceTo"/>
+                                                <div class="col-xs-2">
+                                                    <label class="name">Nhân viên</label>
+                                                    <form:select class="form-control" path="staffId">
+                                                        <form:option value="">---Chọn nhân viên---</form:option>
+                                                        <form:options items="${listStaffs}"/>
+                                                    </form:select>
                                                 </div>
                                             </div>
                                         </div>
                                         <div class="form-group">
                                             <div class="col-xs-12">
                                                 <div class="col-xs-6">
-                                                    <label class="name">Tên quản lý</label>
-                                                    <form:input class="form-control" path="managerName"/>
-                                                </div>
-                                                <div class="col-xs-6">
-                                                    <label class="name">Số điện thoại quản lý</label>
-                                                    <form:input class="form-control" path="managerPhone"/>
-                                                </div>
-
-                                            </div>
-                                        </div>
-                                        <div class="form-group">
-                                            <div class="col-xs-12">
-                                                <div class="col-xs-9">
-                                                <label class="name">Loại toà nhà</label>
                                                     <form:checkboxes items="${typeCodes}" path="typeCode"/>
                                                 </div>
                                             </div>
                                         </div>
-                                        <div class="form-group">
+                                        <div>
                                             <div class="col-xs-12">
                                                 <div class="col-xs-6">
-                                                    <button type="button" class="btn btn-xs btn-success"
-                                                            id="btnSearchBuilding">
-                                                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16"
-                                                             fill="currentColor" class="bi bi-search" viewBox="0 0 16 16">
+                                                    <button type="button" class="btn btn-xs btn-danger" id="btnSearchBuilding">
+                                                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-search" viewBox="0 0 16 16">
                                                             <path d="M11.742 10.344a6.5 6.5 0 1 0-1.397 1.398h-.001q.044.06.098.115l3.85 3.85a1 1 0 0 0 1.415-1.414l-3.85-3.85a1 1 0 0 0-.115-.1zM12 6.5a5.5 5.5 0 1 1-11 0 5.5 5.5 0 0 1 11 0"></path>
                                                         </svg>
                                                         Tìm kiếm
@@ -170,246 +173,213 @@
                                                 </div>
                                             </div>
                                         </div>
-                                         </div>
+
                                     </div>
-                                </div>
-                            </form:form>
+                                 </div>
+                               </form:form>
+                            </div>
                         </div>
                         <div class="pull-right">
-                            <%--                            <a href="/admin/building-edit">--%>
                             <a href="/admin/building-edit">
-                                <button class="bn632-hover bn26" title="Thêm toà nhà">
-                                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16"
-                                         fill="currentColor" class="bi bi-building-add" viewBox="0 0 16 16">
-                                        <path
-                                                d="M12.5 16a3.5 3.5 0 1 0 0-7 3.5 3.5 0 0 0 0 7m.5-5v1h1a.5.5 0 0 1 0 1h-1v1a.5.5 0 0 1-1 0v-1h-1a.5.5 0 0 1 0-1h1v-1a.5.5 0 0 1 1 0">
-                                        </path>
-                                        <path
-                                                d="M2 1a1 1 0 0 1 1-1h10a1 1 0 0 1 1 1v6.5a.5.5 0 0 1-1 0V1H3v14h3v-2.5a.5.5 0 0 1 .5-.5H8v4H3a1 1 0 0 1-1-1z">
-                                        </path>
-                                        <path
-                                                d="M4.5 2a.5.5 0 0 0-.5.5v1a.5.5 0 0 0 .5.5h1a.5.5 0 0 0 .5-.5v-1a.5.5 0 0 0-.5-.5zm3 0a.5.5 0 0 0-.5.5v1a.5.5 0 0 0 .5.5h1a.5.5 0 0 0 .5-.5v-1a.5.5 0 0 0-.5-.5zm3 0a.5.5 0 0 0-.5.5v1a.5.5 0 0 0 .5.5h1a.5.5 0 0 0 .5-.5v-1a.5.5 0 0 0-.5-.5zm-6 3a.5.5 0 0 0-.5.5v1a.5.5 0 0 0 .5.5h1a.5.5 0 0 0 .5-.5v-1a.5.5 0 0 0-.5-.5zm3 0a.5.5 0 0 0-.5.5v1a.5.5 0 0 0 .5.5h1a.5.5 0 0 0 .5-.5v-1a.5.5 0 0 0-.5-.5zm3 0a.5.5 0 0 0-.5.5v1a.5.5 0 0 0 .5.5h1a.5.5 0 0 0 .5-.5v-1a.5.5 0 0 0-.5-.5zm-6 3a.5.5 0 0 0-.5.5v1a.5.5 0 0 0 .5.5h1a.5.5 0 0 0 .5-.5v-1a.5.5 0 0 0-.5-.5zm3 0a.5.5 0 0 0-.5.5v1a.5.5 0 0 0 .5.5h1a.5.5 0 0 0 .5-.5v-1a.5.5 0 0 0-.5-.5z">
-                                        </path>
+                                <button class="btn btn-info" title="Thêm tòa nhà">
+                                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-building-add" viewBox="0 0 16 16">
+                                        <path d="M12.5 16a3.5 3.5 0 1 0 0-7 3.5 3.5 0 0 0 0 7m.5-5v1h1a.5.5 0 0 1 0 1h-1v1a.5.5 0 0 1-1 0v-1h-1a.5.5 0 0 1 0-1h1v-1a.5.5 0 0 1 1 0"/>
+                                        <path d="M2 1a1 1 0 0 1 1-1h10a1 1 0 0 1 1 1v6.5a.5.5 0 0 1-1 0V1H3v14h3v-2.5a.5.5 0 0 1 .5-.5H8v4H3a1 1 0 0 1-1-1z"/>
+                                        <path d="M4.5 2a.5.5 0 0 0-.5.5v1a.5.5 0 0 0 .5.5h1a.5.5 0 0 0 .5-.5v-1a.5.5 0 0 0-.5-.5zm3 0a.5.5 0 0 0-.5.5v1a.5.5 0 0 0 .5.5h1a.5.5 0 0 0 .5-.5v-1a.5.5 0 0 0-.5-.5zm3 0a.5.5 0 0 0-.5.5v1a.5.5 0 0 0 .5.5h1a.5.5 0 0 0 .5-.5v-1a.5.5 0 0 0-.5-.5zm-6 3a.5.5 0 0 0-.5.5v1a.5.5 0 0 0 .5.5h1a.5.5 0 0 0 .5-.5v-1a.5.5 0 0 0-.5-.5zm3 0a.5.5 0 0 0-.5.5v1a.5.5 0 0 0 .5.5h1a.5.5 0 0 0 .5-.5v-1a.5.5 0 0 0-.5-.5zm3 0a.5.5 0 0 0-.5.5v1a.5.5 0 0 0 .5.5h1a.5.5 0 0 0 .5-.5v-1a.5.5 0 0 0-.5-.5zm-6 3a.5.5 0 0 0-.5.5v1a.5.5 0 0 0 .5.5h1a.5.5 0 0 0 .5-.5v-1a.5.5 0 0 0-.5-.5zm3 0a.5.5 0 0 0-.5.5v1a.5.5 0 0 0 .5.5h1a.5.5 0 0 0 .5-.5v-1a.5.5 0 0 0-.5-.5z"/>
                                     </svg>
                                 </button>
                             </a>
-
-                                <a href="/admin/building-list">
-                            <button class="bn633-hover bn26" title="Xoá toà nhà" id="btnDeleteBuilding" type="button">
-                                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16"
-                                     fill="currentColor" class="bi bi-building-fill-x" viewBox="0 0 16 16">
-                                    <path
-                                            d="M2 1a1 1 0 0 1 1-1h10a1 1 0 0 1 1 1v7.256A4.5 4.5 0 0 0 12.5 8a4.5 4.5 0 0 0-3.59 1.787A.5.5 0 0 0 9 9.5v-1a.5.5 0 0 0-.5-.5h-1a.5.5 0 0 0-.5.5v1a.5.5 0 0 0 .5.5h1a.5.5 0 0 0 .39-.187A4.5 4.5 0 0 0 8.027 12H6.5a.5.5 0 0 0-.5.5V16H3a1 1 0 0 1-1-1zm2 1.5v1a.5.5 0 0 0 .5.5h1a.5.5 0 0 0 .5-.5v-1a.5.5 0 0 0-.5-.5h-1a.5.5 0 0 0-.5.5m3 0v1a.5.5 0 0 0 .5.5h1a.5.5 0 0 0 .5-.5v-1a.5.5 0 0 0-.5-.5h-1a.5.5 0 0 0-.5.5m3.5-.5a.5.5 0 0 0-.5.5v1a.5.5 0 0 0 .5.5h1a.5.5 0 0 0 .5-.5v-1a.5.5 0 0 0-.5-.5zM4 5.5v1a.5.5 0 0 0 .5.5h1a.5.5 0 0 0 .5-.5v-1a.5.5 0 0 0-.5-.5h-1a.5.5 0 0 0-.5.5M7.5 5a.5.5 0 0 0-.5.5v1a.5.5 0 0 0 .5.5h1a.5.5 0 0 0 .5-.5v-1a.5.5 0 0 0-.5-.5zm2.5.5v1a.5.5 0 0 0 .5.5h1a.5.5 0 0 0 .5-.5v-1a.5.5 0 0 0-.5-.5h-1a.5.5 0 0 0-.5.5M4.5 8a.5.5 0 0 0-.5.5v1a.5.5 0 0 0 .5.5h1a.5.5 0 0 0 .5-.5v-1a.5.5 0 0 0-.5-.5z">
-                                    </path>
-                                    <path
-                                            d="M12.5 16a3.5 3.5 0 1 0 0-7 3.5 3.5 0 0 0 0 7m-.646-4.854.646.647.646-.647a.5.5 0 0 1 .708.708l-.647.646.647.646a.5.5 0 0 1-.708.708l-.646-.647-.646.647a.5.5 0 0 1-.708-.708l.647-.646-.647-.646a.5.5 0 0 1 .708-.708">
-                                    </path>
+                            <button class="btn btn-danger" title="Xóa tòa nhà" id="btnDeleteBuilding">
+                                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-building-dash" viewBox="0 0 16 16">
+                                    <path d="M12.5 16a3.5 3.5 0 1 0 0-7 3.5 3.5 0 0 0 0 7M11 12h3a.5.5 0 0 1 0 1h-3a.5.5 0 0 1 0-1"/>
+                                    <path d="M2 1a1 1 0 0 1 1-1h10a1 1 0 0 1 1 1v6.5a.5.5 0 0 1-1 0V1H3v14h3v-2.5a.5.5 0 0 1 .5-.5H8v4H3a1 1 0 0 1-1-1z"/>
+                                    <path d="M4.5 2a.5.5 0 0 0-.5.5v1a.5.5 0 0 0 .5.5h1a.5.5 0 0 0 .5-.5v-1a.5.5 0 0 0-.5-.5zm3 0a.5.5 0 0 0-.5.5v1a.5.5 0 0 0 .5.5h1a.5.5 0 0 0 .5-.5v-1a.5.5 0 0 0-.5-.5zm3 0a.5.5 0 0 0-.5.5v1a.5.5 0 0 0 .5.5h1a.5.5 0 0 0 .5-.5v-1a.5.5 0 0 0-.5-.5zm-6 3a.5.5 0 0 0-.5.5v1a.5.5 0 0 0 .5.5h1a.5.5 0 0 0 .5-.5v-1a.5.5 0 0 0-.5-.5zm3 0a.5.5 0 0 0-.5.5v1a.5.5 0 0 0 .5.5h1a.5.5 0 0 0 .5-.5v-1a.5.5 0 0 0-.5-.5zm3 0a.5.5 0 0 0-.5.5v1a.5.5 0 0 0 .5.5h1a.5.5 0 0 0 .5-.5v-1a.5.5 0 0 0-.5-.5zm-6 3a.5.5 0 0 0-.5.5v1a.5.5 0 0 0 .5.5h1a.5.5 0 0 0 .5-.5v-1a.5.5 0 0 0-.5-.5zm3 0a.5.5 0 0 0-.5.5v1a.5.5 0 0 0 .5.5h1a.5.5 0 0 0 .5-.5v-1a.5.5 0 0 0-.5-.5z"/>
                                 </svg>
                             </button>
-                                </a>
                         </div>
                     </div>
-
-
                 </div>
             </div>
-        </div>
 
-        <!--Bảng danh sách-->
-        <div class="row" >
-            <div class="col-12" style="margin-top: 3em; width: 78%;box-shadow: rgba(14, 30, 37, 0.12) 0px 2px 4px 0px, rgba(14, 30, 37, 0.32) 0px 2px 16px 0px;
-                                           margin-left: auto;
-                                            margin-right: auto;">
-                <table id="tableList" class="table table-striped table-bordered table-hover">
-                    <thead>
-                    <tr>
-                        <th class="center">
-                            <label class="pos-rel">
-                                <input type="checkbox" name="checkList" value="" class="ace">
-                                <span class="lbl"></span>
-                            </label>
-                        </th>
-                        <th>Tên tòa nhà</th>
-                        <th>Địa chỉ</th>
-                        <th>Tổng số tầng</th>
-                        <th>Chung cư ở tầng</th>
-                        <th>Tên quản lý</th>
-                        <th>Số điện thoại quản lý</th>
-                        <th>Diện tích sàn</th>
-                        <th>Diện tích thuê</th>
-                        <th>Kiểu tòa nhà</th>
-                        <th>Dịch vụ phí</th>
-                        <th>Thao tác</th>
-
-
-                    </tr>
-                    </thead>
-
-                    <tbody>
-                    <c:forEach var="item" items="${buildingList}">
+            <!-- Bảng danh sách -->
+            <div class="row" style="font-family: 'Times New Roman', Times, serif;">
+                <div class="col-xs-12">
+                    <table id="tableList" style="margin: 3em 0 1.5em;" class="table table-striped table-bordered table-hover">
+                        <thead>
                         <tr>
-                            <td class="center">
+                            <th class="center">
                                 <label class="pos-rel">
-                                    <input type="checkbox" name="checkList" value="${item.id}" class="ace">
+                                    <input type="checkbox" class="ace">
                                     <span class="lbl"></span>
                                 </label>
-                            </td>
-
-
-                            <td>
-                                    <a href="/detailbuilding-${item.id}">${item.name}</a>
-                            </td>
-                            <td>${item.address}</td>
-                            <td>${item.numberFloor}</td>
-                            <td>${item.floor}</td>
-                            <td>${item.managerName}</td>
-                            <td>${item.managerPhone}</td>
-                            <td>${item.floorArea} m2</td>
-                            <td>${item.rentArea} m2</td>
-                            <td>${item.typeCode}</td>
-                            <td>${item.serviceFee} đồng</td>
-                            <td>
-                                <div class="hidden-sm hidden-xs btn-group">
-
-                                        <a  title="Sửa tòa nhà"
-                                           href="/admin/building-edit-${item.id}">
-                                           <button class="btn-xs bn632-hover bn26" title="Sửa toà nhà" style="width: 25px; height: 25px"
-                                                onclick="(${item.id})">
-                                            <i class="fa-solid fa-pencil"></i>
-                                        </button>
-                                        </a>
-                                        <a  title="Xoá tòa nhà"
-                                           href="/admin/building-list">
-                                        <button class="btn-xs bn633-hover bn26" title="Xoá toà nhà" style="width: 25px; height: 25px"
-                                                onclick="deleteBuilding(${item.id})">
-                                            <i class="fa-solid fa-building-circle-xmark"></i>
-                                        </button>
-                                        </a>
-
-
-
-                                </div>
-
-
-                            </td>
-
-
+                            </th>
+                            <th>Tên tòa nhà</th>
+                            <th>Địa chỉ</th>
+                            <th>Số tầng hầm</th>
+                            <th>Tên quản lý</th>
+                            <th>Số điện thoại quản lý</th>
+                            <th>D.Tích sàn</th>
+                            <th>D.Tích trống</th>
+                            <th>D.Tích thuê</th>
+                            <th>Phí mô giới</th>
+                            <th>Thao tác</th>
                         </tr>
-                    </c:forEach>
+                        </thead>
+
+                        <tbody>
+                        <c:forEach var="item" items="${buildingList}">
+                            <tr>
+                                <td class="center">
+                                    <label class="pos-rel">
+                                        <input type="checkbox" class="ace" name="checkList" value="${item.id}">
+                                        <span class="lbl"></span>
+                                    </label>
+                                </td>
+
+                                <td>${item.name}</td>
+                                <td>${item.address}</td>
+                                <td>${item.numberOfBasement}</td>
+                                <td>${item.managerName}</td>
+                                <td>${item.managerPhone}</td>
+                                <td>${item.floorArea}</td>
+                                <td>${item.rentArea}</td>
+                                <td>${item.id}</td>
+                                <td>${item.id}</td>
+
+                                <td>
+                                    <div class="hidden-sm hidden-xs btn-group">
+                                        <button class="btn btn-xs btn-success" title="Giao tòa nhà" onclick="assingmentBuilding(${item.id})">
+                                            <i class="ace-icon glyphicon glyphicon-align-justify"></i>
+                                        </button>
+
+                                        <a class="btn btn-xs btn-info" title="Sửa tòa nhà" href="/admin/building-edit-${item.id}">
+                                            <i class="ace-icon fa fa-pencil bigger-120"></i>
+                                        </a>
+
+                                        <button class="btn btn-xs btn-danger" title="Xóa tòa nhà" onclick="deleteBuilding(${item.id})" >
+                                            <i class="ace-icon fa fa-trash-o bigger-120"></i>
+                                        </button>
+                                    </div>
+                                </td>
+                            </tr>
+                        </c:forEach>
 
 
-                    </tbody>
-                </table>
-            </div><!-- /.span -->
-        </div>
-    </div><!-- /.page-content -->
 
+                        </tbody>
+                    </table>
+                </div><!-- /.span -->
+            </div>
+        </div><!-- /.page-content -->
+    </div>
 </div><!-- /.main-content -->
-<div class="modal fade" id="assignmentBuildingModal" role="dialog"
-     style="font-family: 'Times New Roman', Times, serif;">
+
+<div class="modal fade" id="assingmentBuildingModal" role="dialog" style="font-family: 'Times New Roman', Times, serif;">
     <div class="modal-dialog">
         <div class="modal-content">
-
-            <!-- Modal Header -->
             <div class="modal-header">
                 <button type="button" class="close" data-dismiss="modal">&times;</button>
                 <h4 class="modal-title">Danh sách nhân viên</h4>
-
             </div>
-
-            <!-- Modal body -->
             <div class="modal-body">
-                <table class="table table-striped table-bordered table-hover center" id="staffList">
+                <table style="margin: 3em 0 1.5em;" class="table table-striped table-bordered table-hover" id="staffList">
                     <thead>
                     <tr>
-                        <th class="center">Chọn</th>
-                        </th>
-                        <th class="center">Tên nhân viên</th>
-
+                        <th>Chọn</th>
+                        <th>Tên nhân viên</th>
                     </tr>
                     </thead>
 
                     <tbody>
+<%--                    <tr>--%>
+<%--                        <td class="center">--%>
+<%--                            <input type="checkbox" id="checkbox_1" value="1">--%>
+<%--                        </td>--%>
+
+<%--                        <td>--%>
+<%--                            Nguyễn Văn A--%>
+<%--                        </td>--%>
+<%--                    </tr>--%>
+<%--                    <tr>--%>
+<%--                        <td class="center">--%>
+<%--                            <input type="checkbox" id="checkbox_2" value="2">--%>
+<%--                        </td>--%>
+
+<%--                        <td>--%>
+<%--                            Nguyễn Văn B--%>
+<%--                        </td>--%>
+<%--                    </tr>--%>
+
 
                     </tbody>
                 </table>
-                <input type="hidden" id="buildingId" name="buildingId" value="">
+                <input type="hidden" id="buildingId" name="Building" value="">
             </div>
-
-            <!-- Modal footer -->
             <div class="modal-footer">
-                <button type="button" class="btn btn-default" id="btnassignmentBuilding">Giao tòa nhà</button>
-                <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                <button type="button" class="btn btn-default" id="btnassingmentBuilding">Giao tòa nhà </button>
+                <button type="button" class="btn btn-default" data-dismiss="modal">Đóng</button>
             </div>
-
         </div>
     </div>
 </div>
-
 <script>
-    function assignmentBuilding(buildingId) {
-        $('#assignmentBuildingModal').modal();
+    function assingmentBuilding(buildingId){
+        $('#assingmentBuildingModal').modal();
         loadStaff(buildingId);
         $('#buildingId').val(buildingId);
-
     }
 
-    function loadStaff(buildingId) {
+    function loadStaff(buildingId){
         $.ajax({
-            url: "/api/building/" + buildingId + '/staffs',
             type: "GET",
-            // data: JSON.stringify(data),
-            // contentType: "application/json",
-            dataType: 'json',
-            success: function (response) {
-                var row = '';
-                $.each(response.data, function (index, item) {
-                    row += '<tr>';
-                    row += '<td class="text-center"><input type="checkbox" value=' + item.staffId + ' id="checkbox_' + item.staffId + ' class="check-box-element" ' + item.checked + '/></td>';
-                    row += '<td class="text-center">' + item.fullName + '</td>';
-                    row += '</tr>';
+            url: "${buildingAPI}/" + buildingId + '/staffs',
+            // data: JSON.stringfy(data),
+            contentType:"application/json",
+            dataType:"JSON",
+            success: function(response){
+                var row = "";
+                $.each(response.data, function(index, item) {
+                  row += '<tr>';
+                  row += '<td class="text-center"><input type="checkbox" value=' +item.staffId + ' id="checkbox_' + item.staffId + '" class="check-box-element"' + item.checked + '/></td>';
+                  row += '<td class="text-center">' + item.fullName + '</td>';
+                  row += '</tr>';
                 });
                 $('#staffList tbody').html(row);
-                console.info("susscess");
-
-
+                console.info("success");
             },
-            error: function (response) {
-                console.log("failed");
+            error: function(response){
+                console.log("Failed");
                 window.location.href = "<c:url value="/admin/building-list?message=error"/>";
                 console.log(response);
             }
         });
     }
 
-    $('#btnassignmentBuilding').click(function(e) {
+    $('#btnassingmentBuilding').click(function(e){
         e.preventDefault();
         var data = {};
         data['buildingId'] = $('#buildingId').val();
-        var staffs = $('#staffList').find('tbody input[type=checkbox]:checked').map(function () {
+        var staffs = $('#staffList').find('tbody input[type= checkbox]:checked').map(function(){
             return $(this).val();
         }).get();
         data['staffs'] = staffs;
-        if(data['staffs']!=""){
-             assignment(data);
+        if(data['staffs'] != ''){
+            assingment(data);
         }
         console.log("OK");
-    })
+    });
 
-    function assignment(data){
+    function assingment(data){
         $.ajax({
-            url: "/api/building/assignment",
             type: "POST",
-            data: JSON.stringify(data),
-            contentType: "application/json",
-            dataType: 'json',
-            success: function (response) {
-
-                $('#staffList tbody').html(row);
-                console.info("susscess");
-
+            url: "${buildingAPI}/" + 'assignment',
+            data: JSON.stringfy(data),
+            contentType:"application/json",
+            dataType:"JSON",
+            success: function(response){
+                console.info("success");
             },
-            error: function (response) {
+            error: function(response){
                 console.info("Giao không thành công");
                 window.location.href = "<c:url value="/admin/building-list?message=error"/>";
                 console.log(response);
@@ -417,36 +387,35 @@
         });
     }
 
-    $('#btnSearchBuilding').click(function (e) {
+    $('#btnSearchBuilding').click(function(e){
         e.preventDefault();
-        $('#ListForm').submit();
+        $('#listForm').submit();
     });
 
-    function deleteBuilding(data) {
-        var buildingId = [data];
+    function deleteBuilding(id){
+        var buildingId = [id];
         deleteBuildings(buildingId);
     }
 
-    $('#btnDeleteBuilding').click(function (e) {
+    $('#btnDeleteBuilding').click(function(e){
         e.preventDefault();
-        var buildingIds = $('#tableList').find('tbody input[type=checkbox]:checked').map(function () {
+        var buildingIds = $('#tableList').find('tbody input[type= checkbox]:checked').map(function(){
             return $(this).val();
         }).get();
         deleteBuildings(buildingIds);
     });
-
-    function deleteBuildings(data) {
+    function deleteBuildings(data){
         $.ajax({
-            type: "DELETE",
-            url: "/api/building/" + data,
-            data: JSON.stringify(data),
-            contentType: "application/json",
-            dataType: "JSON",
-            succsess: function (respond) {
-                console.log("Success");
+            type: "Delete",
+            url: "${buildingAPI}/" + data,
+            data: JSON.stringfy(data),
+            contentType:"application/json",
+            dataType:"JSON",
+            success: function(respond){
+                console.success("Success");
             },
-            error: function (respond) {
-                console.log("failed");
+            error: function(respond){
+                console.log("Failed");
                 console.log(respond);
             }
         });
