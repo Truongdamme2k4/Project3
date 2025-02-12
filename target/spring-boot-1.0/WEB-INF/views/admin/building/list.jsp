@@ -313,7 +313,7 @@
 
                     </tbody>
                 </table>
-                <input type="hidden" id="buildingId" name="Building" value="">
+                <input type="hidden" id="buildingId" name="buildingId" value="">
             </div>
             <div class="modal-footer">
                 <button type="button" class="btn btn-default" id="btnassingmentBuilding">Giao tòa nhà </button>
