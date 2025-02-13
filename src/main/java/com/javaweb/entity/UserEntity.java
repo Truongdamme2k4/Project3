@@ -35,14 +35,14 @@ public class UserEntity extends BaseEntity {
             inverseJoinColumns = @JoinColumn(name = "role_id", nullable = false))
     private List<RoleEntity> roles = new ArrayList<>();
 
+
+
     @ManyToMany(mappedBy = "userEntities", fetch = FetchType.LAZY)
     List<BuildingEntity> buildingEntityList = new ArrayList<>();
 
-//    @OneToMany(mappedBy="staffs", fetch = FetchType.LAZY)
-//    private List<AssignmentBuildingEntity> assignmentBuildingEntities = new ArrayList<>();
-//
-//    @OneToMany(mappedBy="users", fetch = FetchType.LAZY)
-//    private List<UserRoleEntity> userRoleEntities = new ArrayList<>();
+    @ManyToMany(mappedBy = "userEntities", fetch = FetchType.LAZY)
+    List<CustomerEntity> customerEntities = new ArrayList<>();
+
 
     public static long getSerialVersionUID() {
         return serialVersionUID;
@@ -112,5 +112,13 @@ public class UserEntity extends BaseEntity {
 
     public void setBuildingEntityList(List<BuildingEntity> buildingEntityList) {
         this.buildingEntityList = buildingEntityList;
+    }
+
+    public List<CustomerEntity> getCustomerEntities() {
+        return customerEntities;
+    }
+
+    public void setCustomerEntities(List<CustomerEntity> customerEntities) {
+        this.customerEntities = customerEntities;
     }
 }
